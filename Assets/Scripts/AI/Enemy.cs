@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using AI.States;
+using Ammo;
 using Constants;
 using FSM;
 using UnityEngine;
@@ -10,35 +11,36 @@ namespace AI
 {
     [RequireComponent(typeof(StateMachine))]
     [RequireComponent(typeof(AmmoPool))]
-    public class EnemyController : MonoBehaviour
+    public class Enemy : MonoBehaviour
     {
         public static readonly float RayDistance = 2.0f;
-        
-        [Header("Movement values")]
-        [SerializeField] private float movementSpeed = 8;
-        public float MovementSpeed => movementSpeed;
-        
-        [SerializeField] private float rotationSpeed = 15;
-        public float RotationSpeed => rotationSpeed;
-        
-        [Header("Offensive values")]
-        [SerializeField] private float damage = 20F;
-        public float Damage => damage;
 
-        [SerializeField] private float attackSpeed = 2.6F;
-        public float AttackSpeed => attackSpeed;
+        [field: Header("Movement values")]
+        public float MovementSpeed { get; } = 8;
+        public float RotationSpeed { get; } = 15;
+
+        [Header("Offensive values")]
+        [SerializeField] 
+        private float damage = 20F;
+        [SerializeField] 
+        private float projectileSpeed = 250;
+
+        public float AttackSpeed { get; } = 2.6F;
 
         [Header("Defensive values")]
         [SerializeField] private float health = 100;
 
         public float Health => health;
 
+        private AmmoPool _ammoPool;
 
         private StateMachine _stateMachine;
 
         private void Start()
         {
             _stateMachine = GetComponent<StateMachine>();
+            _ammoPool = GetComponent<AmmoPool>();
+            _ammoPool.InitAmmoPool(damage, projectileSpeed);
             var playerBaseTransform = GameObject.FindWithTag(Tags.PlayerBase).transform;
 
             var states = new Dictionary<Type, FSMState>
@@ -50,6 +52,12 @@ namespace AI
             };
 
             _stateMachine.SetStates(states);
+        }
+
+        public void ReceiveDamage(float amount)
+        {
+            var newHealthvalue = Mathf.Max(0, health - amount);
+            health = newHealthvalue;
         }
 
         public bool IsDead()

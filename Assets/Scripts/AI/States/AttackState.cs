@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ammo;
+using Buildings;
 using Constants;
 using UnityEngine;
 
@@ -9,7 +11,7 @@ namespace AI.States
     public class AttackState : FSMState
     {
         private static readonly int Attack = Animator.StringToHash("attack");
-        private EnemyController _enemyController;
+        private Enemy _enemy;
         private AmmoPool _ammoPool;
         private Transform _transform;
         private Tower _currentTarget;
@@ -17,12 +19,12 @@ namespace AI.States
 
         private float _lastAttackTime;
 
-        public AttackState(EnemyController enemyController) : base(enemyController.gameObject)
+        public AttackState(Enemy enemy) : base(enemy.gameObject)
         {
             _ammoPool = gameObject.GetComponent<AmmoPool>();
             _transform = gameObject.transform.GetChild(0).transform;
             _animator = _transform.GetComponent<Animator>();
-            _enemyController = enemyController;
+            _enemy = enemy;
             _lastAttackTime = 0;
         }
 
@@ -33,7 +35,7 @@ namespace AI.States
 
         public override Type Execute()
         {
-            if (_enemyController.IsDead())
+            if (_enemy.IsDead())
             {
                 return typeof(DieState);
             }
@@ -42,7 +44,7 @@ namespace AI.States
 
             if (_currentTarget != null)
             {
-                if (_lastAttackTime >= _enemyController.AttackSpeed)
+                if (_lastAttackTime >= _enemy.AttackSpeed)
                 {
                     _ammoPool.Shoot(_currentTarget.transform.position);
                     _lastAttackTime = 0;
@@ -63,10 +65,10 @@ namespace AI.States
         Tower GetClosestTower()
         {
             int layerMask = Layers.Tower;
-            Debug.DrawRay(_transform.position, _transform.forward * EnemyController.RayDistance, Color.red);
+            Debug.DrawRay(_transform.position, _transform.forward * Enemy.RayDistance, Color.red);
 
             RaycastHit hit;        
-            if (Physics.Raycast(_transform.position, _transform.forward, out hit, EnemyController.RayDistance, layerMask))
+            if (Physics.Raycast(_transform.position, _transform.forward, out hit, Enemy.RayDistance, layerMask))
             {
                 var tower = hit.transform.GetComponent<Tower>();
 

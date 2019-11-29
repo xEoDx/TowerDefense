@@ -11,7 +11,7 @@ namespace AI.States
         private static readonly int Run = Animator.StringToHash("run");
         private static readonly int WalkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
 
-        private EnemyController _enemyController;
+        private Enemy _enemy;
         private Animator _animator;
         private NavMeshAgent _agent;
         private Transform _transform;
@@ -19,13 +19,13 @@ namespace AI.States
         private Vector3 _currentDestinationPosition;
         private float _stuckElapsedTime;
 
-        public RunState(EnemyController enemyController, Transform playerBaseTransform) : base(enemyController
+        public RunState(Enemy enemy, Transform playerBaseTransform) : base(enemy
             .gameObject)
         {
             _transform = gameObject.transform.GetChild(0).transform;
             _animator = _transform.GetComponent<Animator>();
             _agent = _transform.GetComponent<NavMeshAgent>();
-            _enemyController = enemyController;
+            _enemy = enemy;
             _playerBaseTransform = playerBaseTransform;
         }
 
@@ -35,7 +35,7 @@ namespace AI.States
             _currentDestinationPosition = _playerBaseTransform.position;
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(_currentDestinationPosition, out hit, EnemyController.RayDistance * 5f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(_currentDestinationPosition, out hit, Enemy.RayDistance * 5f, NavMesh.AllAreas))
             {
                 _currentDestinationPosition = hit.position;
             }
@@ -46,7 +46,7 @@ namespace AI.States
 
         public override Type Execute()
         {
-            if (_enemyController.IsDead())
+            if (_enemy.IsDead())
             {
                 return typeof(DieState);
             }
@@ -77,7 +77,7 @@ namespace AI.States
         private void UpdateRotation()
         {
             var direction = _currentDestinationPosition - _transform.position;
-            float step = _enemyController.RotationSpeed * Time.deltaTime;
+            float step = _enemy.RotationSpeed * Time.deltaTime;
 
             Vector3 newDirection = Vector3.RotateTowards(_transform.forward, direction, step, 0.0f);
 
@@ -87,10 +87,10 @@ namespace AI.States
         private bool IsCollidingWithTower()
         {
             int layerMask = 1 << 9;
-            Debug.DrawRay(_transform.position, _transform.forward * EnemyController.RayDistance, Color.white);
+            Debug.DrawRay(_transform.position, _transform.forward * Enemy.RayDistance, Color.white);
 
             RaycastHit hit;        
-            if (Physics.Raycast(_transform.position, _transform.forward, out hit, EnemyController.RayDistance, layerMask))
+            if (Physics.Raycast(_transform.position, _transform.forward, out hit, Enemy.RayDistance, layerMask))
             {
                 return true;
             }
