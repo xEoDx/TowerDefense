@@ -4,6 +4,9 @@ namespace Constants
     {
         public const string PlayerBase = "Base";
         public const string Tower = "Tower";
+        public const string Enemy = "Enemy";
+        public const string PlayerAmmo = "PlayerAmmo";
+        public const string EnemyAmmo = "EnemyAmmo";
     }
 
     public struct Layers

@@ -1,4 +1,6 @@
-﻿using Constants;
+﻿using AI;
+using Buildings;
+using Constants;
 using UnityEngine;
 
 namespace Ammo
@@ -17,31 +19,37 @@ namespace Ammo
         {
             if (!isReady)
             {
-                if (elapsedLifeTime > LifeTime)
+                if (ElapsedLifeTime > LifeTime)
                 {
                     ResetProjectile();
                 }
 
-                elapsedLifeTime += Time.deltaTime;
+                ElapsedLifeTime += Time.deltaTime;
                 
-                transform.position = Vector3.MoveTowards(transform.position, target, projectileSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, Target, projectileSpeed * Time.deltaTime);
             }
         }
 
         public override void Shoot(Vector3 position)
         {
             isReady = false;
-            target = position;
+            Target = position;
             transform.localPosition = Vector3.zero;
             _meshRenderer.enabled = true;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Tags.Tower))
+            if (other.CompareTag(Tags.Tower) && transform.CompareTag("Enemy"))
             {
                 var tower = other.GetComponent<Tower>();
                 tower.ReceiveDamage(damage);
+                ResetProjectile();
+            }
+            else if (other.CompareTag(Tags.Enemy) && transform.CompareTag("Player"))
+            {
+                var enemy = other.GetComponent<Enemy>();
+                enemy.ReceiveDamage(damage);
                 ResetProjectile();
             }
         }
@@ -51,7 +59,7 @@ namespace Ammo
             isReady = true;
             _meshRenderer.enabled = false;
             transform.localPosition = Vector3.zero;
-            elapsedLifeTime = 0;
+            ElapsedLifeTime = 0;
         }
     }
 }
