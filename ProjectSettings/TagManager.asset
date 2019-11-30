@@ -21,8 +21,8 @@ TagManager:
   - PostProcessing
   - Tower
   - Projectile
-  - 
-  - 
+  - Enemy
+  - Obstacle
   - 
   - 
   - 
