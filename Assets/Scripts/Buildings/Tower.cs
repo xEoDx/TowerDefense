@@ -35,10 +35,15 @@ namespace Buildings
         {
             _attributes = GetComponent<TowerAttributes>();
             _ammoPool = GetComponent<AmmoPool>();
-            _ammoPool.InitAmmoPool(_attributes.Damage, _attributes.ProjectileSpeed);
+            
             _currentTarget = null;
             CurrentHealth = _attributes.Health;
+        }
 
+        void Start()
+        {
+            _ammoPool.InitAmmoPool(_attributes.Damage, _attributes.ProjectileSpeed);
+            
             _stateMachine = GetComponent<StateMachine>();
             var towerFsmStates = new Dictionary<Type, FSMState>
             {

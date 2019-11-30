@@ -7,7 +7,7 @@ namespace Ammo
 {
     public class AmmoPool : MonoBehaviour
     {
-        public enum ProjectileOwner
+        private enum ProjectileOwner
         {
             Player,
             Enemy
@@ -19,14 +19,6 @@ namespace Ammo
         [SerializeField] private int poolSize = 10;
 
         private IList<Projectile> _projectiles;
-
-        private float _projectileSpeed;
-
-        public float ProjectileSpeed
-        {
-            get => _projectileSpeed;
-            set => _projectileSpeed = value;
-        }
 
         private void Awake()
         {

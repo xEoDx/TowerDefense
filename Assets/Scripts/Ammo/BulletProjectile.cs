@@ -40,13 +40,13 @@ namespace Ammo
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Tags.Tower) && transform.CompareTag("Enemy"))
+            if (other.CompareTag(Tags.Tower) && transform.CompareTag(Tags.EnemyAmmo))
             {
                 var tower = other.GetComponent<Tower>();
                 tower.ReceiveDamage(damage);
                 ResetProjectile();
             }
-            else if (other.CompareTag(Tags.Enemy) && transform.CompareTag("Player"))
+            else if (other.CompareTag(Tags.Enemy) && transform.CompareTag(Tags.PlayerAmmo))
             {
                 var enemy = other.GetComponent<Enemy>();
                 enemy.ReceiveDamage(damage);
