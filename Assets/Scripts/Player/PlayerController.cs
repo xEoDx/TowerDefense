@@ -1,4 +1,5 @@
 ﻿using System;
+using AI;
 using Gameplay;
 using UnityEngine;
 
@@ -18,7 +19,14 @@ namespace Player
         private void Start()
         {
             _gameplayController = FindObjectOfType<GameplayController>();
+            _gameplayController.OnEnemyDead += OnEnemyDeadListener;
+            
             AddIncome(_gameplayController.GetStartingIncome());
+        }
+
+        private void OnEnemyDeadListener(Enemy enemy)
+        {
+            AddIncome(enemy.Reward);
         }
 
         public void AddIncome(int amount)

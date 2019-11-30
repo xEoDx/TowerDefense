@@ -15,27 +15,34 @@ namespace AI
     {
         public static readonly float RayDistance = 2.0f;
 
-        [field: Header("Movement values")]
-        public float MovementSpeed { get; } = 8;
+        [field: Header("Movement values")] public float MovementSpeed { get; } = 8;
         public float RotationSpeed { get; } = 15;
 
-        [Header("Offensive values")]
-        [SerializeField] 
+        [Header("Offensive values")] [SerializeField]
         private float damage = 20F;
-        [SerializeField] 
-        private float projectileSpeed = 250;
+
+        [SerializeField] private float projectileSpeed = 250;
 
         public float AttackSpeed { get; } = 2.6F;
 
-        [Header("Defensive values")]
-        [SerializeField] private float health = 100;
+        [Header("Defensive values")] [SerializeField]
+        private float health = 100;
 
         public float Health => health;
 
+
+        [Header("Other")] 
+        [SerializeField] 
+        [Tooltip("Amount of income a player gets when killing this enemy")]
+        private int reward = 50;
+
+        public int Reward => reward;
+
+        [SerializeField]//TODO REMOVE
+        private float _currentHealth;
         private AmmoPool _ammoPool;
 
         private StateMachine _stateMachine;
-        private float _currentHealth;
 
         private void Start()
         {

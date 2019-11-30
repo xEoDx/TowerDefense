@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AI;
 using Gameplay.States;
 using UnityEngine;
@@ -10,13 +11,15 @@ namespace Gameplay
     [RequireComponent(typeof(StateMachine))]
     public class GameplayController : MonoBehaviour
     {
+        public event Action<Enemy> OnEnemyDead;
+
         private StateMachine _stateStateMachine;
-        
+
         //TODO READ FROM JSON FILE
         private static Level Level;
 
         private EnemySpawner _enemySpawner;
-        
+
         private int _currentWaveNumber;
 
         public int CurrentWaveNumber => _currentWaveNumber;
@@ -27,13 +30,13 @@ namespace Gameplay
         private List<Enemy> _activeEnemies;
 
         public List<Enemy> ActiveEnemies => _activeEnemies;
-    
+
         private void Awake()
         {
             InitFsm();
-            
+
             _activeEnemies = new List<Enemy>();
-            
+
             IList<Wave> waves = new List<Wave>();
             IDictionary<EnemySpawner.EnemyType, int> waveEnemies = new Dictionary<EnemySpawner.EnemyType, int>()
             {
@@ -64,12 +67,12 @@ namespace Gameplay
             _currentWaveNumber = 0;
 
             _enemySpawner = FindObjectOfType<EnemySpawner>();
-            
         }
 
         private void Start()
         {
-            IDictionary<EnemySpawner.EnemyType, int> maxEnemiesPerTypeToSpawn = new Dictionary<EnemySpawner.EnemyType, int>();
+            IDictionary<EnemySpawner.EnemyType, int> maxEnemiesPerTypeToSpawn =
+                new Dictionary<EnemySpawner.EnemyType, int>();
             foreach (var wave in Level.Waves)
             {
                 foreach (var kvp in wave.WaveEnemies)
@@ -86,26 +89,26 @@ namespace Gameplay
                     }
                 }
             }
+
             _enemySpawner.Init(maxEnemiesPerTypeToSpawn);
         }
 
         private void InitFsm()
         {
             _stateStateMachine = GetComponent<StateMachine>();
-        
+
             var states = new Dictionary<Type, FSMState>
             {
                 {typeof(AwaitingState), new AwaitingState(this)},
                 {typeof(SpawnState), new SpawnState(this)}
             };
-        
+
             _stateStateMachine.SetStates(states);
         }
 
         private void Update()
         {
             UpdatedEnabledEnemiesList();
-
         }
 
         public IList<Enemy> GetActiveEnemies()
@@ -138,18 +141,27 @@ namespace Gameplay
         private Wave? GetWave(int waveNumber)
         {
             Wave? wave = null;
-            
+
             if (waveNumber < _totalWavesCount)
             {
                 wave = Level.Waves[waveNumber];
             }
-            
+
             return wave;
         }
 
         private void UpdatedEnabledEnemiesList()
         {
-            _activeEnemies.RemoveAll(e => e.IsDead() || !e.gameObject.activeSelf);
+            // Notify enemy died
+            _activeEnemies
+                .Where(e => e.IsDead() || !e.gameObject.activeSelf)
+                .ToList()
+                .ForEach(e => OnEnemyDead?.Invoke(e));
+
+            // Remove from list
+            _activeEnemies
+                .RemoveAll(e => e.IsDead() || !e.gameObject.activeSelf);
+
         }
     }
 }

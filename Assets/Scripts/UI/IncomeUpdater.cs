@@ -10,13 +10,14 @@ namespace UI
         [SerializeField] 
         private Text incomeText;
 
-        [SerializeField] private float textUpdateSpeed = 2;
+        [SerializeField] private float textUpdateTime = 1;
         
         private PlayerController _playerController;
         private int _currentIncome;
         private int _updatedIncome;
 
         private bool _isInitialized;
+        private float _elapsedTime;
 
         private void Start()
         {
@@ -31,7 +32,7 @@ namespace UI
             {
                 InitializeText(updatedIncome);
             }
-            
+            _elapsedTime = 0;
             _updatedIncome = updatedIncome;
         }
 
@@ -46,8 +47,13 @@ namespace UI
         {
             if (_currentIncome != _updatedIncome)
             {
-                _currentIncome = (int) Mathf.Lerp(_currentIncome, _updatedIncome, textUpdateSpeed * Time.deltaTime);
+                _currentIncome = (int) Mathf.Lerp(_currentIncome, _updatedIncome, _elapsedTime / textUpdateTime);
                 incomeText.text = _currentIncome.ToString();
+                _elapsedTime += Time.deltaTime;
+            }
+            else
+            {
+                _elapsedTime = 0;
             }
         }
     }
