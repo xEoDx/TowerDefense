@@ -28,7 +28,7 @@ namespace AI.States
 
         public override Type Execute()
         {
-            return typeof(DieState);
+            return typeof(IdleState);
         }
 
         public override void Exit()
