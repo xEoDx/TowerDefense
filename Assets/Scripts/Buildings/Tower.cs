@@ -4,6 +4,7 @@ using AI;
 using Ammo;
 using Buildings.States;
 using FSM;
+using Gameplay;
 using UnityEngine;
 
 namespace Buildings
@@ -27,12 +28,14 @@ namespace Buildings
 
         public AmmoPool AmmoPool => _ammoPool;
 
+        private EnemySpawner _enemySpawner;
         private StateMachine _stateMachine;
         private Enemy _currentTarget;
       
         
         void Awake()
         {
+            _enemySpawner = FindObjectOfType<EnemySpawner>();
             _attributes = GetComponent<TowerAttributes>();
             _ammoPool = GetComponent<AmmoPool>();
             
@@ -82,6 +85,11 @@ namespace Buildings
         public void UpdateHealth(float newHealth)
         {
             CurrentHealth = newHealth;
+        }
+
+        public IList<Enemy> GetActiveEnemies()
+        {
+            return _enemySpawner.GetActiveEnemies();
         }
     }
 }
