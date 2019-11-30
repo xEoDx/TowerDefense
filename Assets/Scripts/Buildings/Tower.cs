@@ -30,6 +30,7 @@ namespace Buildings
         
         private StateMachine _stateMachine;
         private Enemy _currentTarget;
+        private GameplayController _gameplayController;
       
         
         void Awake()
@@ -43,6 +44,7 @@ namespace Buildings
 
         void Start()
         {
+            _gameplayController = FindObjectOfType<GameplayController>();
             _ammoPool.InitAmmoPool(_attributes.Damage, _attributes.ProjectileSpeed);
             
             _stateMachine = GetComponent<StateMachine>();
@@ -87,7 +89,7 @@ namespace Buildings
 
         public IList<Enemy> GetActiveEnemies()
         {
-            return _enemySpawner.GetActiveEnemies();
+            return _gameplayController.GetActiveEnemies();
         }
     }
 }

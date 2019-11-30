@@ -23,8 +23,7 @@ namespace AI.States
         {
             _agent.speed = _enemy.MovementSpeed;
             
-            _totalTime = UnityEngine.Random.Range(0, 1.5f);
-            Debug.Log("[IdleState] Init, rnd: "+_totalTime);
+            _totalTime = UnityEngine.Random.Range(0, 1f);
         }
 
         public override Type Execute()

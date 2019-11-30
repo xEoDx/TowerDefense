@@ -64,13 +64,16 @@ namespace Gameplay
             
             foreach (var enemy in enemiesOfType)
             {
-                if (foundEnemies < amount && !enemy.gameObject.activeSelf || enemy.IsDead())
+                if (foundEnemies < amount)
                 {
-                    enemy.Reset();
-                    enemy.transform.position = GetRandomPosition();
-                    enemy.gameObject.SetActive(true);
-                    enemies.Add(enemy);
-                    foundEnemies++;
+                    if (!enemy.gameObject.activeSelf || enemy.IsDead())
+                    {
+                        enemy.Reset();
+                        enemy.transform.position = GetRandomPosition();
+                        enemy.gameObject.SetActive(true);
+                        enemies.Add(enemy);
+                        foundEnemies++;
+                    }
                 }
             }
 
