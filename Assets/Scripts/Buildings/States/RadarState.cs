@@ -22,6 +22,8 @@ namespace Buildings.States
 
         public override Type Execute()
         {
+            UpdateRotation();
+            
             foreach (var enemy in _enemies)
             {
                 if (Vector3.Distance(enemy.transform.position, _tower.transform.position) < _tower.Attributes.Range)
@@ -36,5 +38,11 @@ namespace Buildings.States
 
         public override void Exit()
         {}
+        
+        private void UpdateRotation()
+        {
+            float step = _tower.Attributes.RotationSpeed * Time.deltaTime;
+            _tower.RotatingElementTransform.rotation = Quaternion.Lerp(_tower.RotatingElementTransform.rotation, Quaternion.identity, step);
+        }
     }
 }
