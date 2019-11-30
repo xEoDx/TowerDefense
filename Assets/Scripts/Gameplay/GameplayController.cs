@@ -9,26 +9,19 @@ namespace Gameplay
     public class GameplayController : MonoBehaviour
     {
         private StateMachine _stateStateMachine;
-        private EnemySpawner _enemySpawner;
+        private LevelController _levelController;
     
         private void Awake()
         {
-            InitFSM();
+            InitFsm();
         }
 
         private void Start()
         {
-            _enemySpawner = FindObjectOfType<EnemySpawner>();
-            IDictionary<EnemySpawner.EnemyType, int> enemiesToSpawn = new Dictionary<EnemySpawner.EnemyType, int>()
-            {
-                {EnemySpawner.EnemyType.Basic, 5},
-                {EnemySpawner.EnemyType.Fast, 1},
-                {EnemySpawner.EnemyType.Big, 1}
-            };
-            _enemySpawner.Init(enemiesToSpawn);
+            _levelController = FindObjectOfType<LevelController>();
         }
 
-        private void InitFSM()
+        private void InitFsm()
         {
             _stateStateMachine = GetComponent<StateMachine>();
         
@@ -40,10 +33,6 @@ namespace Gameplay
         
             _stateStateMachine.SetStates(states);
         }
-
-        public void StartWave(EnemySpawner.EnemyType type, int amount)
-        {
-            _enemySpawner.Enable(type, amount);
-        }
+        
     }
 }

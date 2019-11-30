@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AI;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -13,7 +12,6 @@ namespace Gameplay
         
         private IDictionary<EnemyType, IList<Enemy>> _spawnedEnemies;
 
-        private IList<Enemy> _activeEnemies;
 
         public enum EnemyType
         {
@@ -31,7 +29,6 @@ namespace Gameplay
 
         public void Init(IDictionary<EnemyType, int> enemiesToSpawn)
         {
-            _activeEnemies = new List<Enemy>();
             _spawnedEnemies = new Dictionary<EnemyType, IList<Enemy>>(enemiesToSpawn.Count);
             foreach (var kvp in enemiesToSpawn)
             {
@@ -53,28 +50,31 @@ namespace Gameplay
             return spawnPoints[index].transform.position;
         }
 
-        public void Enable(EnemyType type, int amount)
+        public IList<Enemy> Enable(EnemyType type, int amount)
         {
-            _activeEnemies.Clear();
-            
+            IList<Enemy> enemies = new List<Enemy>(amount);
             var enemiesFromType = _spawnedEnemies[type];
             if (enemiesFromType.Count < amount)
             {
                 amount = enemiesFromType.Count;
             }
 
-            for (int i = 0; i < amount; i++)
+            var foundEnemies = 0;
+            var enemiesOfType = _spawnedEnemies[type];
+            
+            foreach (var enemy in enemiesOfType)
             {
-                var enemy = _spawnedEnemies[type][i];
-                enemy.gameObject.SetActive(true);
-                enemy.transform.position = GetRandomPosition();
-                _activeEnemies.Add(enemy);
+                if (foundEnemies < amount && !enemy.gameObject.activeSelf || enemy.IsDead())
+                {
+                    enemy.Reset();
+                    enemy.transform.position = GetRandomPosition();
+                    enemy.gameObject.SetActive(true);
+                    enemies.Add(enemy);
+                    foundEnemies++;
+                }
             }
-        }
 
-        public IList<Enemy> GetActiveEnemies()
-        {
-            return _activeEnemies;
+            return enemies;
         }
     }
 }

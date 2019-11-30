@@ -14,7 +14,7 @@ public class PlayingState : FSMState
 
     public override void Init()
     {
-        _gameplayController.StartWave(EnemySpawner.EnemyType.Basic, 2);
+        
     }
 
     public override Type Execute()

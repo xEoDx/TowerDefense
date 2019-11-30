@@ -35,12 +35,14 @@ namespace AI
         private AmmoPool _ammoPool;
 
         private StateMachine _stateMachine;
+        private float _currentHealth;
 
         private void Start()
         {
             _stateMachine = GetComponent<StateMachine>();
             _ammoPool = GetComponent<AmmoPool>();
             _ammoPool.InitAmmoPool(damage, projectileSpeed);
+            _currentHealth = health;
             var playerBaseTransform = GameObject.FindWithTag(Tags.PlayerBase).transform;
 
             var states = new Dictionary<Type, FSMState>
@@ -56,13 +58,18 @@ namespace AI
 
         public void ReceiveDamage(float amount)
         {
-            var newHealthvalue = Mathf.Max(0, health - amount);
-            health = newHealthvalue;
+            var newHealthvalue = Mathf.Max(0, _currentHealth - amount);
+            _currentHealth = newHealthvalue;
         }
 
         public bool IsDead()
         {
-            return health <= 0;
+            return _currentHealth <= 0;
+        }
+
+        public void Reset()
+        {
+            _currentHealth = health;
         }
     }
 }

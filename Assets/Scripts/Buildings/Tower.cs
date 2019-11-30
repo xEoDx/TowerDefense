@@ -27,15 +27,13 @@ namespace Buildings
         private AmmoPool _ammoPool;
 
         public AmmoPool AmmoPool => _ammoPool;
-
-        private EnemySpawner _enemySpawner;
+        
         private StateMachine _stateMachine;
         private Enemy _currentTarget;
       
         
         void Awake()
         {
-            _enemySpawner = FindObjectOfType<EnemySpawner>();
             _attributes = GetComponent<TowerAttributes>();
             _ammoPool = GetComponent<AmmoPool>();
             
