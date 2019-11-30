@@ -14,50 +14,56 @@ namespace Buildings
     [RequireComponent(typeof(AmmoPool))]
     public abstract class Tower : MonoBehaviour
     {
-        private int _enemyMask;
-        private int _obstacleMask;
-        
-        [SerializeField]
-        private Transform rotatingElementTransform;
+        #region Serializable Fields
 
-        [SerializeField] private bool forceToPlacedState = false;
-        
+        [SerializeField] 
+        private Transform rotatingElementTransform;
         public Transform RotatingElementTransform => rotatingElementTransform;
 
-        private TowerAttributes _attributes;
-        public TowerAttributes Attributes => _attributes;
+        [SerializeField] 
+        private bool forceToPlacedState = false;
 
-        
-        private AmmoPool _ammoPool;
-        public AmmoPool AmmoPool => _ammoPool;
+        #endregion
 
-        private bool _isPlaced;
-        public bool IsPlaced => _isPlaced;
+        #region Properties
+
+        public TowerAttributes Attributes { get; private set; }
+        public AmmoPool AmmoPool { get; private set; }
+        public bool IsPlaced { get; private set; }
+
+        #endregion
+
+        #region Fields
 
         protected float CurrentHealth;
 
         private StateMachine _stateMachine;
         private Enemy _currentTarget;
         private GameplayController _gameplayController;
-      
-        
+
+        private int _enemyMask;
+        private int _obstacleMask;
+
+        #endregion
+
+        #region Unity Event Functions
         void Awake()
         {
-            _attributes = GetComponent<TowerAttributes>();
-            _ammoPool = GetComponent<AmmoPool>();
-            
+            Attributes = GetComponent<TowerAttributes>();
+            AmmoPool = GetComponent<AmmoPool>();
+
             _currentTarget = null;
-            CurrentHealth = _attributes.Health;
+            CurrentHealth = Attributes.Health;
         }
 
         void Start()
         {
             _enemyMask = LayerMask.GetMask("Enemy");
-            _obstacleMask  = LayerMask.GetMask("Obstacle");
-            
+            _obstacleMask = LayerMask.GetMask("Obstacle");
+
             _gameplayController = FindObjectOfType<GameplayController>();
-            _ammoPool.InitAmmoPool(_attributes.Damage, _attributes.ProjectileSpeed);
-            
+            AmmoPool.InitAmmoPool(Attributes.Damage, Attributes.ProjectileSpeed);
+
             _stateMachine = GetComponent<StateMachine>();
             var towerFsmStates = new Dictionary<Type, FSMState>
             {
@@ -65,7 +71,7 @@ namespace Buildings
                 {typeof(RadarState), new RadarState(this)},
                 {typeof(AttackState), new AttackState(this)}
             };
-            
+
             // Initial towers placed in the map
             Type initialState = null;
             if (forceToPlacedState)
@@ -73,7 +79,7 @@ namespace Buildings
                 PlaceTower();
                 initialState = typeof(RadarState);
             }
-            
+
             _stateMachine.SetStates(towerFsmStates, initialState);
         }
 
@@ -84,8 +90,15 @@ namespace Buildings
                 gameObject.SetActive(false);
             }
         }
+        #endregion
+        
+        #region Abstract Interface
+
         public abstract void ReceiveDamage(float amount);
 
+        #endregion
+        
+        #region Methods
         //TODO MOVE TO TOWERRENDERER
         public void SetUnplaceable()
         {
@@ -134,9 +147,10 @@ namespace Buildings
 
                 meshRenderer.material = meshRendererMaterial;
             }
-            _isPlaced = true;
+
+            IsPlaced = true;
         }
-        
+
         private bool IsDestroyed()
         {
             return CurrentHealth <= 0;
@@ -158,15 +172,15 @@ namespace Buildings
             var direction = enemyPosition - towerPosition;
             var hits = Physics.RaycastAll(towerPosition,
                 direction,
-                _attributes.Range,
+                Attributes.Range,
                 _enemyMask | _obstacleMask);
-           
+
             var enemyDistance = float.MaxValue;
             var obstacleDistance = float.MaxValue;
             foreach (var hit in hits)
             {
                 var distance = Vector3.Distance(hit.transform.position, rotatingElementTransform.transform.position);
-                if (1 << hit.transform.gameObject.layer == _enemyMask )
+                if (1 << hit.transform.gameObject.layer == _enemyMask)
                 {
                     if (distance < enemyDistance)
                     {
@@ -184,6 +198,6 @@ namespace Buildings
 
             return obstacleDistance < enemyDistance;
         }
+        #endregion
     }
 }
-
