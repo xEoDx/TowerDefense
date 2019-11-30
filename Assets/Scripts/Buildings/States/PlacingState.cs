@@ -1,29 +1,31 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Buildings.States
 {
     public class PlacingState : FSMState
-    {    
-        
+    {
+        private Tower _tower;
 
         public PlacingState(Tower tower) : base(tower.gameObject)
         {
+            _tower = tower;
         }
 
         public override void Init()
         {
-            throw new NotImplementedException();
         }
 
         public override Type Execute()
         {
-            throw new NotImplementedException();
+            if (_tower.IsPlaced)
+            {
+                return typeof(RadarState);
+            }
+            return typeof(PlacingState);
         }
 
         public override void Exit()
         {
-            throw new NotImplementedException();
         }
     }
 }

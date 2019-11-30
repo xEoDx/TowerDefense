@@ -24,12 +24,15 @@ namespace Buildings
         private TowerAttributes _attributes;
         public TowerAttributes Attributes => _attributes;
 
-        protected float CurrentHealth;
         
         private AmmoPool _ammoPool;
-
         public AmmoPool AmmoPool => _ammoPool;
-        
+
+        private bool _isPlaced;
+        public bool IsPlaced => _isPlaced;
+
+        protected float CurrentHealth;
+
         private StateMachine _stateMachine;
         private Enemy _currentTarget;
         private GameplayController _gameplayController;
@@ -61,6 +64,7 @@ namespace Buildings
             Type initialState = null;
             if (forceToPlacedState)
             {
+                PlaceTower();
                 initialState = typeof(RadarState);
             }
             
@@ -74,6 +78,34 @@ namespace Buildings
                 gameObject.SetActive(false);
             }
         }
+        public abstract void ReceiveDamage(float amount);
+
+        //TODO MOVE TO TOWERRENDERER
+        public void SetUnplaceable()
+        {
+            var renderers = transform.GetComponentsInChildren<MeshRenderer>();
+
+            foreach (var meshRenderer in renderers)
+            {
+                var meshRendererMaterial = meshRenderer.material;
+                meshRendererMaterial.color = Color.red;
+
+                meshRenderer.material = meshRendererMaterial;
+            }
+        }
+
+        public void SetPlaceable()
+        {
+            var renderers = transform.GetComponentsInChildren<MeshRenderer>();
+
+            foreach (var meshRenderer in renderers)
+            {
+                var meshRendererMaterial = meshRenderer.material;
+                meshRendererMaterial.color = Color.green;
+
+                meshRenderer.material = meshRendererMaterial;
+            }
+        }
 
         public Enemy GetCurrentTarget()
         {
@@ -85,9 +117,20 @@ namespace Buildings
             _currentTarget = enemy;
         }
 
-        public abstract void ReceiveDamage(float amount);
+        public void PlaceTower()
+        {
+            var renderers = transform.GetComponentsInChildren<MeshRenderer>();
 
+            foreach (var meshRenderer in renderers)
+            {
+                var meshRendererMaterial = meshRenderer.material;
+                meshRendererMaterial.color = Color.blue;
 
+                meshRenderer.material = meshRendererMaterial;
+            }
+            _isPlaced = true;
+        }
+        
         private bool IsDestroyed()
         {
             return CurrentHealth <= 0;
