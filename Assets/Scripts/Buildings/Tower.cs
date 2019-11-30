@@ -17,6 +17,8 @@ namespace Buildings
         [SerializeField]
         private Transform rotatingElementTransform;
 
+        [SerializeField] private bool forceToPlacedState = false;
+        
         public Transform RotatingElementTransform => rotatingElementTransform;
 
         private TowerAttributes _attributes;
@@ -50,10 +52,19 @@ namespace Buildings
             _stateMachine = GetComponent<StateMachine>();
             var towerFsmStates = new Dictionary<Type, FSMState>
             {
+                {typeof(PlacingState), new PlacingState(this)},
                 {typeof(RadarState), new RadarState(this)},
                 {typeof(AttackState), new AttackState(this)}
             };
-            _stateMachine.SetStates(towerFsmStates);
+            
+            // Initial towers placed in the map
+            Type initialState = null;
+            if (forceToPlacedState)
+            {
+                initialState = typeof(RadarState);
+            }
+            
+            _stateMachine.SetStates(towerFsmStates, initialState);
         }
 
         private void Update()

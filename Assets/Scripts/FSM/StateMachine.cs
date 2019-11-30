@@ -10,20 +10,26 @@ namespace FSM
     {
         private IDictionary<Type, FSMState> _states;
         private FSMState _currentState;
+        private Type _initialStateType;
 
         public event Action<FSMState> OnStateChanged;
 
-        public void SetStates(Dictionary<Type, FSMState> states)
+        public void SetStates(Dictionary<Type, FSMState> states, Type initialState = null)
         {
             _states = states;
+            _initialStateType = initialState;
         }
 
         private void Update()
         {
             if (_currentState == null && _states.Count > 0)
             {
-                var initialState = _states.Keys.First();
-                ChangeState(initialState);
+                if (_initialStateType == null)
+                {
+                    _initialStateType = _states.Keys.First();
+                }
+                    
+                ChangeState(_initialStateType);
             }
 
             var nextState = _currentState?.Execute();
