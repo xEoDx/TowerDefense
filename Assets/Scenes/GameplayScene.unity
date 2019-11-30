@@ -905,6 +905,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 735856436}
+  - component: {fileID: 735856437}
   - component: {fileID: 735856435}
   m_Layer: 0
   m_Name: PlayerController
@@ -939,6 +940,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &735856437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735856434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb9ba5ad6b3eafc44a2169e4417b12fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerGameplayData:
+    income: 0
 --- !u!1001 &754779390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1332,7 +1347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 3261536659904043438, guid: 01bccf44eecca4a4089136ed070e0e40,
     type: 3}
-  cost: 0
+  cost: 100
 --- !u!1 &900394945
 GameObject:
   m_ObjectHideFlags: 0

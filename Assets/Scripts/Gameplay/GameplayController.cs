@@ -56,7 +56,9 @@ namespace Gameplay
             wave = new Wave(waveEnemies, timeToSpawn);
             waves.Add(wave);
 
-            Level = new Level(waves);
+            int startingIncome = 1000;
+
+            Level = new Level(waves, startingIncome);
 
             _totalWavesCount = Level.Waves.Count;
             _currentWaveNumber = 0;
@@ -125,6 +127,11 @@ namespace Gameplay
         {
             var enabledEnemies = _enemySpawner.Enable(type, amount);
             _activeEnemies.AddRange(enabledEnemies);
+        }
+
+        public int GetStartingIncome()
+        {
+            return Level.InitialIncome;
         }
 
 

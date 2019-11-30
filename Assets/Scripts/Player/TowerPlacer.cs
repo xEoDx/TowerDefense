@@ -50,7 +50,6 @@ namespace Player
                 if (isValidPosition && _inputController.IsTouching() && !EventSystem.current.IsPointerOverGameObject())
                 {
                     _tower.PlaceTower();
-                    Debug.Log("Tower placed!");
                     _isPlacing = false;
                     _tower.GetComponent<NavMeshObstacle>().enabled = true;
                 }

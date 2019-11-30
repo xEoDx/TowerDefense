@@ -7,9 +7,13 @@ namespace Gameplay
         private IList<Wave> _waves;
         public IList<Wave> Waves => _waves;
 
-        public Level(IList<Wave> waves)
+        private int _initialIncome;
+        public int InitialIncome => _initialIncome;
+
+        public Level(IList<Wave> waves, int initialIncome)
         {
             _waves = waves;
+            _initialIncome = initialIncome;
         }
     }
 }
