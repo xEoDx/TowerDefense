@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 35
-  damage: 15
+  damage: 20
   attackSpeed: 0.25
   rotationSpeed: 1
   projectileSpeed: 75

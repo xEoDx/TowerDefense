@@ -3271,6 +3271,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArrowTower (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3261536659904043438, guid: 01bccf44eecca4a4089136ed070e0e40,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3261536659904043479, guid: 01bccf44eecca4a4089136ed070e0e40,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3325,21 +3330,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3261536659904043434, guid: 01bccf44eecca4a4089136ed070e0e40,
-        type: 3}
-      propertyPath: damage
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3261536659904043434, guid: 01bccf44eecca4a4089136ed070e0e40,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3261536659904043435, guid: 01bccf44eecca4a4089136ed070e0e40,
-        type: 3}
-      propertyPath: forceToPlacedState
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01bccf44eecca4a4089136ed070e0e40, type: 3}
