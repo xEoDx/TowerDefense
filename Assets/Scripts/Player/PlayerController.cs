@@ -1,11 +1,15 @@
-﻿using Gameplay;
+﻿using System;
+using Gameplay;
 using UnityEngine;
 
 namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private PlayerGameplayData playerGameplayData;
+        public event Action<int> OnIncomeUpdated;
+        
+        [SerializeField] 
+        private PlayerGameplayData playerGameplayData;
 
         public PlayerGameplayData PlayerGameplayData => playerGameplayData;
 
@@ -14,12 +18,19 @@ namespace Player
         private void Start()
         {
             _gameplayController = FindObjectOfType<GameplayController>();
-            playerGameplayData.AddIncome(_gameplayController.GetStartingIncome());
+            AddIncome(_gameplayController.GetStartingIncome());
+        }
+
+        public void AddIncome(int amount)
+        {
+            var updatedIncome = playerGameplayData.AddIncome(amount);
+            OnIncomeUpdated?.Invoke(updatedIncome);
         }
 
         public void SubtractIncome(int amount)
         {
-            playerGameplayData.SubtractIncome(amount);
+            var updatedIncome = playerGameplayData.SubtractIncome(amount);
+            OnIncomeUpdated?.Invoke(updatedIncome);
         }
     }
 }

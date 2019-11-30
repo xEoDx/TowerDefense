@@ -25,7 +25,7 @@ namespace UI
 
         private void Update()
         {
-            _button.interactable = _playerController.PlayerGameplayData.Income > cost;
+            _button.interactable = _playerController.PlayerGameplayData.Income >= cost;
         }
 
         public void Create()

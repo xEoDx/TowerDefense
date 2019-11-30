@@ -16,14 +16,16 @@ namespace Player
             this.income = income;
         }
 
-        public void AddIncome(int amount)
+        public int AddIncome(int amount)
         {
             income += amount;
+            return income;
         }
 
-        public void SubtractIncome(int amount)
+        public int SubtractIncome(int amount)
         {
             income = Mathf.Max(0, income - amount);
+            return income;
         }
     }
 }
