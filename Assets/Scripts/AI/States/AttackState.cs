@@ -22,7 +22,7 @@ namespace AI.States
         public AttackState(Enemy enemy) : base(enemy.gameObject)
         {
             _ammoPool = gameObject.GetComponent<AmmoPool>();
-            _transform = gameObject.transform.GetChild(0).transform;
+            _transform = gameObject.transform;
             _animator = _transform.GetComponent<Animator>();
             _enemy = enemy;
             _lastAttackTime = 0;

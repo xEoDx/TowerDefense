@@ -22,8 +22,8 @@ namespace AI.States
         public RunState(Enemy enemy, Transform playerBaseTransform) : base(enemy
             .gameObject)
         {
-            _transform = gameObject.transform.GetChild(0).transform;
-            _animator = _transform.GetComponent<Animator>();
+            _transform = gameObject.transform;
+            _animator = _transform.GetChild(0).GetComponent<Animator>();
             _agent = _transform.GetComponent<NavMeshAgent>();
             _enemy = enemy;
             _playerBaseTransform = playerBaseTransform;

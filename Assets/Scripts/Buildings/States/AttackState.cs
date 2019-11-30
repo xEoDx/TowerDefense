@@ -23,13 +23,14 @@ namespace Buildings.States
         {
             _attackElapsedTime = 0;
             _currentTarget = _tower.GetCurrentTarget();
-            _enemyTransform = _tower.GetCurrentTarget().transform.GetChild(0);
+            _enemyTransform = _tower.GetCurrentTarget().transform;
 
         }
 
         public override Type Execute()
         {
-            if (_currentTarget.IsDead())
+            if (_currentTarget.IsDead() || 
+                Vector3.Distance(_enemyTransform.position, _tower.transform.position) > _tower.Attributes.Range)
             {
                 return typeof(RadarState);
             }

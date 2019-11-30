@@ -13,7 +13,7 @@ namespace AI.States
 
         public IdleState(Enemy enemy) : base(enemy.gameObject)
         {
-            _agent = gameObject.transform.GetChild(0).GetComponent<NavMeshAgent>();
+            _agent = enemy.transform.GetComponent<NavMeshAgent>();
             _enemy = enemy;
             _elapsedTime = 0;
             _totalTime = 0;
