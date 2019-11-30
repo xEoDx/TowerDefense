@@ -40,5 +40,10 @@ namespace Gameplay
         
             _stateStateMachine.SetStates(states);
         }
+
+        public void StartWave(EnemySpawner.EnemyType type, int amount)
+        {
+            _enemySpawner.Enable(type, amount);
+        }
     }
 }

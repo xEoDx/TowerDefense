@@ -5,7 +5,11 @@ using UnityEngine;
 public class StartingState : FSMState
 {
     private GameplayController _owner;
-
+    
+    //todo check from gameplaycontroller
+    private const float AwaitTime = 5.0f;
+    private float _elapsedTime;
+    
     public StartingState(GameplayController owner) : base(owner.gameObject)
     {
         _owner = owner;
@@ -13,14 +17,19 @@ public class StartingState : FSMState
 
     public override void Init()
     {
-        Debug.Log("[StartingState] OnEnter");
+        _elapsedTime = 0;
+        
     }
 
     public override Type Execute()
     {
-        Debug.Log("[StartingState] OnUpdate");
-        //todo compute logic
-        return typeof(PlayingState);
+        if (_elapsedTime > AwaitTime)
+        {
+            return typeof(PlayingState);
+        }
+        
+        _elapsedTime += Time.deltaTime;
+        return typeof(StartingState);
     }
 
     public override void Exit()

@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class PlayingState : FSMState
 {
-    private GameplayController _stateMachine;
+    private GameplayController _gameplayController;
 
     public PlayingState(GameplayController owner) : base(owner.gameObject)
     {
-        _stateMachine = owner;
+        _gameplayController = owner;
     }
 
 
     public override void Init()
     {
+        _gameplayController.StartWave(EnemySpawner.EnemyType.Basic, 2);
     }
 
     public override Type Execute()
