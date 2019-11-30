@@ -21,14 +21,26 @@ namespace Buildings.States
         public override Type Execute()
         {
             UpdateRotation();
-            
+
+            Enemy closestEnemy = null;
+            float closestEnemyDistance = float.MaxValue;
             foreach (var enemy in _tower.GetActiveEnemies())
             {
-                if (Vector3.Distance(enemy.transform.position, _tower.transform.position) < _tower.Attributes.Range)
+                var distance = Vector3.Distance(enemy.transform.position, _tower.transform.position);
+                if (distance < _tower.Attributes.Range)
                 {
-                    _tower.SetTarget(enemy);
-                    return typeof(AttackState);
+                    if (!_tower.IsBlockedByObstacle(enemy.transform.position) && distance < closestEnemyDistance)
+                    {
+                        closestEnemyDistance = distance;
+                        closestEnemy = enemy;
+                    }
                 }
+            }
+
+            if (closestEnemy != null)
+            {
+                _tower.SetTarget(closestEnemy);
+                return typeof(AttackState);
             }
 
             return typeof(RadarState);

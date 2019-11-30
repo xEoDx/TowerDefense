@@ -14,6 +14,9 @@ namespace Buildings
     [RequireComponent(typeof(AmmoPool))]
     public abstract class Tower : MonoBehaviour
     {
+        private int _enemyMask;
+        private int _obstacleMask;
+        
         [SerializeField]
         private Transform rotatingElementTransform;
 
@@ -49,6 +52,9 @@ namespace Buildings
 
         void Start()
         {
+            _enemyMask = LayerMask.GetMask("Enemy");
+            _obstacleMask  = LayerMask.GetMask("Obstacle");
+            
             _gameplayController = FindObjectOfType<GameplayController>();
             _ammoPool.InitAmmoPool(_attributes.Damage, _attributes.ProjectileSpeed);
             
@@ -144,6 +150,39 @@ namespace Buildings
         public IList<Enemy> GetActiveEnemies()
         {
             return _gameplayController.GetActiveEnemies();
+        }
+
+        public bool IsBlockedByObstacle(Vector3 enemyPosition)
+        {
+            var towerPosition = rotatingElementTransform.position;
+            var direction = enemyPosition - towerPosition;
+            var hits = Physics.RaycastAll(towerPosition,
+                direction,
+                _attributes.Range,
+                _enemyMask | _obstacleMask);
+           
+            var enemyDistance = float.MaxValue;
+            var obstacleDistance = float.MaxValue;
+            foreach (var hit in hits)
+            {
+                var distance = Vector3.Distance(hit.transform.position, rotatingElementTransform.transform.position);
+                if (1 << hit.transform.gameObject.layer == _enemyMask )
+                {
+                    if (distance < enemyDistance)
+                    {
+                        enemyDistance = distance;
+                    }
+                }
+                else if (1 << hit.transform.gameObject.layer == _obstacleMask)
+                {
+                    if (distance < obstacleDistance)
+                    {
+                        obstacleDistance = distance;
+                    }
+                }
+            }
+
+            return obstacleDistance < enemyDistance;
         }
     }
 }
