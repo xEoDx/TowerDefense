@@ -64,7 +64,14 @@ namespace AI.States
             {
                 _stuckElapsedTime = 0f;
             }
-            
+
+            var distanceToTarget = Vector3.Distance(_transform.position, _currentDestinationPosition);
+
+            if (distanceToTarget < 2)
+            {
+                return typeof(DieState);
+            }
+
             return typeof(RunState);
         }
 
