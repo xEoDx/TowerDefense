@@ -1,5 +1,6 @@
 ﻿using System;
 using Buildings;
+using FSM;
 using Player.Input;
 using UnityEngine;
 using UnityEngine.AI;
@@ -57,7 +58,7 @@ namespace Player
                 {
                     _tower.PlaceTower();
                     IsPlacing = false;
-                    _tower.GetComponent<NavMeshObstacle>().enabled = true;
+                    SetTowerEnabled(true);
                 }
             }
         }
@@ -65,9 +66,16 @@ namespace Player
         public void Create(Tower tower)
         {
             _tower = tower;
-            _tower.GetComponent<NavMeshObstacle>().enabled = false;
-            _towerBoundValue = tower.transform.GetComponent<NavMeshObstacle>().radius;
+            _towerBoundValue = _tower.transform.GetComponent<NavMeshObstacle>().radius;
+            SetTowerEnabled(false);
             IsPlacing = true;
+        }
+
+        private void SetTowerEnabled(bool isEnabled)
+        {
+            _tower.enabled = isEnabled;
+            _tower.GetComponent<NavMeshObstacle>().enabled = isEnabled;
+            _tower.GetComponent<StateMachine>().enabled = isEnabled;
         }
     }
 }

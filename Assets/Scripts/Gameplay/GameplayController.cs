@@ -12,6 +12,7 @@ using StateMachine = FSM.StateMachine;
 namespace Gameplay
 {
     [RequireComponent(typeof(StateMachine))]
+    [RequireComponent(typeof(LevelData))]
     public class GameplayController : MonoBehaviour
     {
         #region Events
@@ -37,61 +38,25 @@ namespace Gameplay
         private EnemySpawner _enemySpawner;
         private List<Enemy> _activeEnemies;
         private PlayerBase _playerBase;
-
-        //TODO READ FROM JSON FILE
-        private static Level _level;
+        private LevelData _levelData;
         #endregion
 
         #region Unity Event Functions
         
         private void Awake()
         {
+            InitLevelData();
             InitFsm();
-
-            _activeEnemies = new List<Enemy>();
-
-            IList<Wave> waves = new List<Wave>();
-            IDictionary<EnemySpawner.EnemyType, int> waveEnemies = new Dictionary<EnemySpawner.EnemyType, int>()
-            {
-                {EnemySpawner.EnemyType.Basic, 20},
-                {EnemySpawner.EnemyType.Big, 10}
-            };
-            float timeToSpawn = 30;
-
-            Wave wave = new Wave(waveEnemies, timeToSpawn);
-            waves.Add(wave);
-
-            waveEnemies = new Dictionary<EnemySpawner.EnemyType, int>
-            {
-                {EnemySpawner.EnemyType.Basic, 25},
-                {EnemySpawner.EnemyType.Fast, 10},
-                {EnemySpawner.EnemyType.Big, 15}
-            };
-            timeToSpawn = 40;
-
-            wave = new Wave(waveEnemies, timeToSpawn);
-            waves.Add(wave);
-            
-            waveEnemies = new Dictionary<EnemySpawner.EnemyType, int>
-            {
-                {EnemySpawner.EnemyType.Basic, 40},
-                {EnemySpawner.EnemyType.Fast, 20},
-                {EnemySpawner.EnemyType.Big, 25}
-            };
-            timeToSpawn = 60;
-
-            wave = new Wave(waveEnemies, timeToSpawn);
-            waves.Add(wave);
-
-            var startingIncome = 1000;
-
-            _level = new Level(waves, startingIncome);
-
-            TotalWavesCount = _level.Waves.Count;
-            CurrentWaveNumber = 0;
-
-            _enemySpawner = FindObjectOfType<EnemySpawner>();
             _playerBase = FindObjectOfType<PlayerBase>();
+        }
+
+        private void InitLevelData()
+        {
+            _levelData = GetComponent<LevelData>();
+            TotalWavesCount = _levelData.Level.Waves.Count;
+            _activeEnemies = new List<Enemy>();
+            CurrentWaveNumber = 0;
+            _enemySpawner = FindObjectOfType<EnemySpawner>();
         }
 
         private void Start()
@@ -101,7 +66,7 @@ namespace Gameplay
             // Allocate enemies on Start so that we don't need to create them during game play runtime
             IDictionary<EnemySpawner.EnemyType, int> maxEnemiesPerTypeToSpawn =
                 new Dictionary<EnemySpawner.EnemyType, int>();
-            foreach (var wave in _level.Waves)
+            foreach (var wave in _levelData.Level.Waves)
             {
                 foreach (var kvp in wave.WaveEnemies)
                 {
@@ -154,7 +119,7 @@ namespace Gameplay
 
         public int GetStartingIncome()
         {
-            return _level.InitialIncome;
+            return _levelData.Level.InitialIncome;
         }
 
         public void TriggerGameEnd(GameEndReason gameEndReason)
@@ -183,7 +148,7 @@ namespace Gameplay
 
             if (waveNumber < TotalWavesCount)
             {
-                wave = _level.Waves[waveNumber];
+                wave = _levelData.Level.Waves[waveNumber];
             }
 
             return wave;

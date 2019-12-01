@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Gameplay
 {
+    [Serializable]
     public struct Level
     {
         private IList<Wave> _waves;
