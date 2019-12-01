@@ -7,6 +7,7 @@ using Buildings;
 using Constants;
 using Entities;
 using FSM;
+using Gameplay;
 using UnityEngine;
 
 namespace AI
@@ -16,9 +17,7 @@ namespace AI
     public class BasicEnemy : MonoBehaviour, IEnemy
     {
         public static readonly float RayDistance = 2.0f;
-
-        [SerializeField] private EntityAttributes enemyAttributes;
-        public EntityAttributes EntityAttributes { get; }
+        public EntityAttributes EntityAttributes { get; private set; }
         public AmmoPool AmmoPool { get; }
         public Transform GetTransform { get; }
 
@@ -28,18 +27,26 @@ namespace AI
         private int reward = 50;
 
         public int Reward => reward;
+        public EnemyType EnemyType { get; private set; }
 
         private float _currentHealth;
         private AmmoPool _ammoPool;
-
         private StateMachine _stateMachine;
+        private LevelData _levelData;
+
+        private void Awake()
+        {
+            _levelData = FindObjectOfType<LevelData>();
+        }
 
         private void Start()
         {
+            EnemyType = EnemyType.Basic;
             _stateMachine = GetComponent<StateMachine>();
             _ammoPool = GetComponent<AmmoPool>();
-            _ammoPool.InitAmmoPool(enemyAttributes.OffensiveAttributesData.Damage, enemyAttributes.OffensiveAttributesData.ProjectileSpeed);
-            _currentHealth = enemyAttributes.DefensiveAttributesData.Health;
+            EntityAttributes = _levelData.GetEnemyAttributes(EnemyType);
+            _ammoPool.InitAmmoPool(EntityAttributes.OffensiveAttributesData.Damage, EntityAttributes.OffensiveAttributesData.ProjectileSpeed);
+            _currentHealth = EntityAttributes.DefensiveAttributesData.Health;
             var playerBaseTransform = GameObject.FindWithTag(Tags.PlayerBase).transform;
 
             var states = new Dictionary<Type, FsmState>
@@ -76,7 +83,7 @@ namespace AI
 
         public void Reset()
         {
-            _currentHealth = enemyAttributes.DefensiveAttributesData.Health;
+            _currentHealth = EntityAttributes.DefensiveAttributesData.Health;
         }
 
         

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using AI;
+using Buildings;
 using UnityEngine;
 
 namespace Gameplay
@@ -13,9 +15,19 @@ namespace Gameplay
         [SerializeField]
         private List<WavesData> wavesData;
 
+        [SerializeField] private EntityAttributes basicEnemyAttributes;
+        public EntityAttributes BasicEnemyAttributes => basicEnemyAttributes;
+
+        [SerializeField] private EntityAttributes fastEnemyAttributes;
+
+        public EntityAttributes FastEnemyAttributes => fastEnemyAttributes;
+
+        [SerializeField] private EntityAttributes bigEnemyAttributes;
+        public EntityAttributes BigEnemyAttributes => bigEnemyAttributes;
+
+
         private Level _level;
         public Level Level => _level;
-
 
         private void Awake()
         {
@@ -24,7 +36,7 @@ namespace Gameplay
         
             foreach (var wave in wavesData)
             {
-                IDictionary<EnemySpawner.EnemyType, int> enemyWave = new Dictionary<EnemySpawner.EnemyType, int>();
+                IDictionary<EnemyType, int> enemyWave = new Dictionary<EnemyType, int>();
                 foreach (var waveEnemies in wave.wave)
                 {
                     enemyWave.Add(waveEnemies.type, waveEnemies.amount);
@@ -34,7 +46,29 @@ namespace Gameplay
             }
         
             _level = new Level(waves, initialIncome);
+        }
 
+        public EntityAttributes GetEnemyAttributes(EnemyType enemyType)
+        {
+            EntityAttributes entityAttributes = new EntityAttributes();
+            
+            switch (enemyType)
+            {
+                case EnemyType.Basic:
+                    entityAttributes = basicEnemyAttributes;
+                    break;
+                case EnemyType.Fast:
+                    entityAttributes = fastEnemyAttributes;
+                    break;
+                case EnemyType.Big:
+                    entityAttributes = bigEnemyAttributes;
+                    break;
+                default:
+                    Debug.Log("[LevelData] Unclassified EnemyType. Can't fetch enemy attributes");
+                    break;
+            }
+
+            return entityAttributes;
         }
     }
 
@@ -51,7 +85,7 @@ namespace Gameplay
     [Serializable]
     public struct WaveData
     {
-        public EnemySpawner.EnemyType type;
+        public EnemyType type;
         public int amount;
     }
 }

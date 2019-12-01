@@ -43,6 +43,9 @@ namespace Gameplay
                 case TowerType.Canon:
                     attributes = canonEntityAttributes;
                     break;
+                default:
+                    Debug.Log("[PlayerData] Unclassified TowerType. Can't fetch tower attributes");
+                    break;
             }
 
             return attributes;

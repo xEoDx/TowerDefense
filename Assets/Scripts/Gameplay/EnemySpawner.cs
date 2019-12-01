@@ -11,14 +11,7 @@ namespace Gameplay
         [SerializeField] private GameObject[] spawnPoints;
         
         private IDictionary<EnemyType, IList<BasicEnemy>> _spawnedEnemies;
-
-
-        public enum EnemyType
-        {
-            Basic,
-            Fast,
-            Big
-        }
+        
         private readonly IDictionary<EnemyType, string> _enemyToPrefabPathDictionary = new Dictionary<EnemyType, string>
         {
             {EnemyType.Basic, "Prefabs/BasicEnemy"},

@@ -57,8 +57,8 @@ namespace Gameplay
             _playerBase.OnBaseDestroyed += OnPlayerBaseDestroyed;
             
             // Allocate enemies on Start so that we don't need to create them during game play runtime
-            IDictionary<EnemySpawner.EnemyType, int> maxEnemiesPerTypeToSpawn =
-                new Dictionary<EnemySpawner.EnemyType, int>();
+            IDictionary<EnemyType, int> maxEnemiesPerTypeToSpawn =
+                new Dictionary<EnemyType, int>();
             foreach (var wave in _levelData.Level.Waves)
             {
                 foreach (var kvp in wave.WaveEnemies)
@@ -104,7 +104,7 @@ namespace Gameplay
             CurrentWaveNumber++;
         }
 
-        public void Spawn(EnemySpawner.EnemyType type, int amount)
+        public void Spawn(EnemyType type, int amount)
         {
             var enabledEnemies = _enemySpawner.Enable(type, amount);
             _activeEnemies.AddRange(enabledEnemies);
