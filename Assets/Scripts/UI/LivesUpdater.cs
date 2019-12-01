@@ -12,11 +12,7 @@ namespace UI
 
         private void Awake()
         {
-            _playerBase = FindObjectOfType<PlayerBase>();
-        }
-
-        void Start()
-        {
+            _playerBase = FindObjectOfType<PlayerBase>();        
             _playerBase.OnPlayerLivesUpdated += OnLivesUpdatedListener;
         }
 
