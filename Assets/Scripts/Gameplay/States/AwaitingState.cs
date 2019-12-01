@@ -1,14 +1,15 @@
 ﻿using System;
+using FSM;
 using UnityEngine;
 
 namespace Gameplay.States
 {
-    public class AwaitingState : FSMState
+    public class AwaitingState : FsmState
     {
-        private GameplayController _gameplayController;
+        private readonly GameplayController _gameplayController;
         private float _elapsedTime;
     
-        public AwaitingState(GameplayController gameplayController) : base(gameplayController.gameObject)
+        public AwaitingState(GameplayController gameplayController) : base(gameplayController)
         {
             _gameplayController = gameplayController;
         }

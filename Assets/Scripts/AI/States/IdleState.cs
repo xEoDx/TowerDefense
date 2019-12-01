@@ -1,17 +1,18 @@
 ﻿using System;
+using FSM;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace AI.States
 {
-    public class IdleState : FSMState
+    public class IdleState : FsmState
     {
         private readonly NavMeshAgent _agent;
         private readonly Enemy _enemy;
         private float _elapsedTime;
         private float _totalTime;
 
-        public IdleState(Enemy enemy) : base(enemy.gameObject)
+        public IdleState(Enemy enemy) : base(enemy)
         {
             _agent = enemy.transform.GetComponent<NavMeshAgent>();
             _enemy = enemy;

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using Ammo;
 using Buildings;
 using Constants;
+using FSM;
 using UnityEngine;
 
 namespace AI.States
 {
-    public class AttackState : FSMState
+    public class AttackState : FsmState
     {
         private static readonly int Attack = Animator.StringToHash("attack");
         private readonly Enemy _enemy;
@@ -19,10 +20,10 @@ namespace AI.States
 
         private float _lastAttackTime;
 
-        public AttackState(Enemy enemy) : base(enemy.gameObject)
+        public AttackState(Enemy enemy) : base(enemy)
         {
-            _ammoPool = gameObject.GetComponent<AmmoPool>();
-            _transform = gameObject.transform;
+            _ammoPool = component.GetComponent<AmmoPool>();
+            _transform = component.transform;
             _animator = _transform.GetComponent<Animator>();
             _enemy = enemy;
             _lastAttackTime = 0;

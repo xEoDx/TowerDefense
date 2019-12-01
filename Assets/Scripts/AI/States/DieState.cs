@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FSM;
 using UnityEngine;
 
 namespace AI.States
 {
-    public class DieState : FSMState
+    public class DieState : FsmState
     {
         private static readonly int Die = Animator.StringToHash("die");
         
         private readonly Enemy _enemy;
         private readonly Animator _animator;
 
-        public DieState(Enemy enemy) : base(enemy.gameObject)
+        public DieState(Enemy enemy) : base(enemy)
         {
             _animator = enemy.transform.GetChild(0).GetComponent<Animator>();
             _enemy = enemy;

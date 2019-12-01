@@ -40,7 +40,7 @@ namespace AI
             _currentHealth = entityAttributes.DefensiveAttributesData.Health;
             var playerBaseTransform = GameObject.FindWithTag(Tags.PlayerBase).transform;
 
-            var states = new Dictionary<Type, FSMState>
+            var states = new Dictionary<Type, FsmState>
             {
                 {typeof(IdleState), new IdleState(this)},
                 {typeof(RunState), new RunState(this, playerBaseTransform)},

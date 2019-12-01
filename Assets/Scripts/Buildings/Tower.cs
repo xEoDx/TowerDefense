@@ -66,7 +66,7 @@ namespace Buildings
                 EntityAttributes.OffensiveAttributesData.ProjectileSpeed);
 
             _stateMachine = GetComponent<StateMachine>();
-            var towerFsmStates = new Dictionary<Type, FSMState>
+            var towerFsmStates = new Dictionary<Type, FsmState>
             {
                 {typeof(PlacingState), new PlacingState(this)},
                 {typeof(RadarState), new RadarState(this)},

@@ -1,11 +1,12 @@
 ﻿using System;
 using Constants;
+using FSM;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace AI.States
 {
-    public class RunState : FSMState
+    public class RunState : FsmState
     {
         private static readonly float StuckTimeThreshold = 5.0f;
         private static readonly int Run = Animator.StringToHash("run");
@@ -19,10 +20,9 @@ namespace AI.States
         private Vector3 _currentDestinationPosition;
         private float _stuckElapsedTime;
 
-        public RunState(Enemy enemy, Transform playerBaseTransform) : base(enemy
-            .gameObject)
+        public RunState(Enemy enemy, Transform playerBaseTransform) : base(enemy)
         {
-            _transform = gameObject.transform;
+            _transform = component.transform;
             _animator = _transform.GetChild(0).GetComponent<Animator>();
             _agent = _transform.GetComponent<NavMeshAgent>();
             _enemy = enemy;

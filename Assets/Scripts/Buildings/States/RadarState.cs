@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using AI;
+using FSM;
 using Gameplay;
 using UnityEngine;
 
 namespace Buildings.States
 {
-    public class RadarState : FSMState
+    public class RadarState : FsmState
     {
         private readonly Tower _tower;
         
-        public RadarState(Tower tower) : base(tower.gameObject)
+        public RadarState(Tower tower) : base(tower)
         {
             _tower = tower;
         }

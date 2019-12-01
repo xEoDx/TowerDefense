@@ -8,13 +8,13 @@ namespace FSM
 {
     public class StateMachine : MonoBehaviour
     {
-        private IDictionary<Type, FSMState> _states;
-        private FSMState _currentState;
+        private IDictionary<Type, FsmState> _states;
+        private FsmState _currentState;
         private Type _initialStateType;
 
-        public event Action<FSMState> OnStateChanged;
+        public event Action<FsmState> OnStateChanged;
 
-        public void SetStates(Dictionary<Type, FSMState> states, Type initialState = null)
+        public void SetStates(Dictionary<Type, FsmState> states, Type initialState = null)
         {
             _states = states;
             _initialStateType = initialState;

@@ -1,12 +1,13 @@
 ﻿using System;
+using FSM;
 
 namespace Gameplay.States
 {
-    public class SpawnState : FSMState
+    public class SpawnState : FsmState
     {
-        private GameplayController _gameplayController;
+        private readonly GameplayController _gameplayController;
 
-        public SpawnState(GameplayController gameplayController) : base(gameplayController.gameObject)
+        public SpawnState(GameplayController gameplayController) : base(gameplayController)
         {
             _gameplayController = gameplayController;
         }

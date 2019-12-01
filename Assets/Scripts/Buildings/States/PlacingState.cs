@@ -1,12 +1,13 @@
 ﻿using System;
+using FSM;
 
 namespace Buildings.States
 {
-    public class PlacingState : FSMState
+    public class PlacingState : FsmState
     {
         private readonly Tower _tower;
 
-        public PlacingState(Tower tower) : base(tower.gameObject)
+        public PlacingState(Tower tower) : base(tower)
         {
             _tower = tower;
         }

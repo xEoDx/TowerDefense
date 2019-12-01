@@ -1,11 +1,12 @@
 ﻿using System;
+using FSM;
 
 namespace Gameplay.States
 {
-    public class LoseState : FSMState
+    public class LoseState : FsmState
     {
-        private GameplayController _gameplayController;
-        public LoseState(GameplayController gameplayController) : base(gameplayController.gameObject)
+        private readonly GameplayController _gameplayController;
+        public LoseState(GameplayController gameplayController) : base(gameplayController)
         {
             _gameplayController = gameplayController;
         }

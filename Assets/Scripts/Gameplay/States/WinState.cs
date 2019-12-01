@@ -1,12 +1,13 @@
 ﻿using System;
+using FSM;
 using UnityEngine;
 
 namespace Gameplay.States
 {
-    public class WinState : FSMState
+    public class WinState : FsmState
     {
-        private GameplayController _gameplayController;
-        public WinState(GameplayController gameplayController) : base(gameplayController.gameObject)
+        private readonly GameplayController _gameplayController;
+        public WinState(GameplayController gameplayController) : base(gameplayController)
         {
             _gameplayController = gameplayController;
         }

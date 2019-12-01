@@ -1,11 +1,12 @@
 ﻿using System;
 using AI;
 using Ammo;
+using FSM;
 using UnityEngine;
 
 namespace Buildings.States
 {
-    public class AttackState : FSMState
+    public class AttackState : FsmState
     {
         private const float MaxStuckTime = 1.5f;
 
@@ -16,7 +17,7 @@ namespace Buildings.States
         private float _attackElapsedTime;
         private float _elapsedStuckTime;
 
-        public AttackState(Tower tower) : base(tower.gameObject)
+        public AttackState(Tower tower) : base(tower)
         {
             _tower = tower;
             _ammoPool = _tower.AmmoPool;

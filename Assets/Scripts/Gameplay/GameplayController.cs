@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AI;
 using Buildings;
+using FSM;
 using Gameplay.States;
 using Player;
 using UnityEngine;
@@ -154,7 +155,7 @@ namespace Gameplay
         {
             _stateStateMachine = GetComponent<StateMachine>();
 
-            var states = new Dictionary<Type, FSMState>
+            var states = new Dictionary<Type, FsmState>
             {
                 {typeof(AwaitingState), new AwaitingState(this)},
                 {typeof(SpawnState), new SpawnState(this)},
