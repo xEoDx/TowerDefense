@@ -29,7 +29,7 @@ public class EndLevelPopupController : MonoBehaviour
                 winPopup.SetActive(true);
                 break;
             case GameplayController.GameEndReason.Lose:
-                losePopup.SetActive(false);
+                losePopup.SetActive(true);
                 break;
         }
     }
