@@ -146,7 +146,7 @@ namespace Buildings
             foreach (var meshRenderer in renderers)
             {
                 var meshRendererMaterial = meshRenderer.material;
-                meshRendererMaterial.color = Color.blue;
+                meshRendererMaterial.color = Color.white;
 
                 meshRenderer.material = meshRendererMaterial;
             }

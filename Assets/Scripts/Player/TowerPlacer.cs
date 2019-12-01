@@ -1,4 +1,5 @@
-﻿using Buildings;
+﻿using System;
+using Buildings;
 using Player.Input;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,6 +11,7 @@ namespace Player
     {
         private Tower _tower;
         private Camera _camera;
+        private float _towerBoundValue;
 
         public bool IsPlacing { get; private set; }
 
@@ -19,6 +21,7 @@ namespace Player
             IsPlacing = false;
             _camera = Camera.main;
             _inputController = FindObjectOfType<InputController>();
+            _towerBoundValue = 1;
         }
 
         void Update()
@@ -27,22 +30,26 @@ namespace Player
             {
                 RaycastHit hit;
                 bool isValidPosition = false;
-                if(Physics.Raycast(_camera.ScreenPointToRay(_inputController.GetTouchPosition()), out hit))
+                if(Physics.Raycast(_camera.ScreenPointToRay(_inputController.GetTouchPosition()), out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
                 {
                     isValidPosition = NavMesh.SamplePosition(hit.point, out var centerNavMeshHit, 1, NavMesh.AllAreas)
-                                      && NavMesh.SamplePosition(hit.point - (Vector3.forward / 2), out var navMeshHitBottom, 1, NavMesh.AllAreas)
-                                      && NavMesh.SamplePosition(hit.point + (Vector3.forward / 2), out var navMeshHitTop, 1, NavMesh.AllAreas)
-                                      && NavMesh.SamplePosition(hit.point - (Vector3.right / 2), out var navMeshHitLeft, 1, NavMesh.AllAreas)
-                                      && NavMesh.SamplePosition(hit.point + (Vector3.right / 2), out var navMeshHitRight, 1, NavMesh.AllAreas);
+                                      && NavMesh.SamplePosition(hit.point - (Vector3.forward * _towerBoundValue), out var navMeshHitBottom, 1, NavMesh.AllAreas)
+                                      && NavMesh.SamplePosition(hit.point + (Vector3.forward * _towerBoundValue), out var navMeshHitTop, 1, NavMesh.AllAreas)
+                                      && NavMesh.SamplePosition(hit.point - (Vector3.right * _towerBoundValue), out var navMeshHitLeft, 1, NavMesh.AllAreas)
+                                      && NavMesh.SamplePosition(hit.point + (Vector3.right * _towerBoundValue), out var navMeshHitRight, 1, NavMesh.AllAreas);
 
                     if (isValidPosition)
                     {
                         _tower.SetPlaceable();
-                        _tower.transform.position = centerNavMeshHit.position;
+
+                        var updatedPosition = centerNavMeshHit.position;
+                        updatedPosition.y = 0;
+                        _tower.transform.position = updatedPosition;
                     }
                     else
                     {
                         _tower.SetUnplaceable();
+                        _tower.transform.position = hit.point;
                     }
                 }
 
@@ -59,6 +66,7 @@ namespace Player
         {
             _tower = tower;
             _tower.GetComponent<NavMeshObstacle>().enabled = false;
+            _towerBoundValue = tower.transform.GetComponent<NavMeshObstacle>().radius;
             IsPlacing = true;
         }
     }
