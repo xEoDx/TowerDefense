@@ -9,25 +9,25 @@ using UnityEngine;
 
 namespace Buildings
 {
-    [RequireComponent(typeof(TowerAttributes))]
     [RequireComponent(typeof(StateMachine))]
     [RequireComponent(typeof(AmmoPool))]
     public abstract class Tower : MonoBehaviour
     {
         #region Serializable Fields
 
-        [SerializeField] 
-        private Transform rotatingElementTransform;
+        [SerializeField] private Transform rotatingElementTransform;
         public Transform RotatingElementTransform => rotatingElementTransform;
 
-        [SerializeField] 
-        private bool forceToPlacedState = false;
+        [SerializeField] private bool forceToPlacedState = false;
+
+        [SerializeField] private TowerAttributes towerAttributes;
 
         #endregion
 
         #region Properties
 
-        public TowerAttributes Attributes { get; private set; }
+        public TowerAttributes TowerAttributes => towerAttributes;
+
         public AmmoPool AmmoPool { get; private set; }
         public bool IsPlaced { get; private set; }
 
@@ -47,13 +47,13 @@ namespace Buildings
         #endregion
 
         #region Unity Event Functions
+
         void Awake()
         {
-            Attributes = GetComponent<TowerAttributes>();
             AmmoPool = GetComponent<AmmoPool>();
 
             _currentTarget = null;
-            CurrentHealth = Attributes.Health;
+            CurrentHealth = TowerAttributes.DefensiveAttributesData.Health;
         }
 
         void Start()
@@ -62,7 +62,8 @@ namespace Buildings
             _obstacleMask = LayerMask.GetMask("Obstacle");
 
             _gameplayController = FindObjectOfType<GameplayController>();
-            AmmoPool.InitAmmoPool(Attributes.Damage, Attributes.ProjectileSpeed);
+            AmmoPool.InitAmmoPool(TowerAttributes.OffensiveAttributesData.Damage,
+                TowerAttributes.OffensiveAttributesData.ProjectileSpeed);
 
             _stateMachine = GetComponent<StateMachine>();
             var towerFsmStates = new Dictionary<Type, FSMState>
@@ -90,15 +91,17 @@ namespace Buildings
                 gameObject.SetActive(false);
             }
         }
+
         #endregion
-        
+
         #region Abstract Interface
 
         public abstract void ReceiveDamage(float amount);
 
         #endregion
-        
+
         #region Methods
+
         //TODO MOVE TO TOWERRENDERER
         public void SetUnplaceable()
         {
@@ -172,7 +175,7 @@ namespace Buildings
             var direction = enemyPosition - towerPosition;
             var hits = Physics.RaycastAll(towerPosition,
                 direction,
-                Attributes.Range,
+                TowerAttributes.OffensiveAttributesData.Range,
                 _enemyMask | _obstacleMask);
 
             var enemyDistance = float.MaxValue;
@@ -198,6 +201,7 @@ namespace Buildings
 
             return obstacleDistance < enemyDistance;
         }
+
         #endregion
     }
 }

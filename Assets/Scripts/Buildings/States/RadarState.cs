@@ -27,7 +27,7 @@ namespace Buildings.States
             foreach (var enemy in _tower.GetActiveEnemies())
             {
                 var distance = Vector3.Distance(enemy.transform.position, _tower.transform.position);
-                if (distance < _tower.Attributes.Range)
+                if (distance < _tower.TowerAttributes.OffensiveAttributesData.Range)
                 {
                     if (!_tower.IsBlockedByObstacle(enemy.transform.position) && distance < closestEnemyDistance)
                     {
@@ -51,7 +51,7 @@ namespace Buildings.States
         
         private void UpdateRotation()
         {
-            float step = _tower.Attributes.RotationSpeed * Time.deltaTime;
+            float step = _tower.TowerAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
             _tower.RotatingElementTransform.rotation = Quaternion.Lerp(_tower.RotatingElementTransform.rotation, Quaternion.identity, step);
         }
     }

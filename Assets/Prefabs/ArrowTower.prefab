@@ -194,7 +194,6 @@ GameObject:
   - component: {fileID: 3261536659904043479}
   - component: {fileID: 3261536659904043476}
   - component: {fileID: 3261536659904043477}
-  - component: {fileID: 3261536659904043434}
   - component: {fileID: 3261536659904043435}
   - component: {fileID: 3261536659904043432}
   - component: {fileID: 3261536659904043433}
@@ -246,24 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202f0cd76f305724eb9128e8804674c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3261536659904043434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3261536659904043438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e6ff2e45649ea343a1a313ee1d6ff83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 35
-  damage: 20
-  attackSpeed: 0.25
-  rotationSpeed: 1
-  projectileSpeed: 75
-  health: 100
 --- !u!114 &3261536659904043435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +259,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotatingElementTransform: {fileID: 3261536659766888542}
   forceToPlacedState: 0
+  towerAttributes:
+    offensiveAttributes:
+      range: 35
+      damage: 15
+      attackSpeed: 0.25
+      projectileSpeed: 90
+    defensiveAttributes:
+      health: 100
+    movementAttributes:
+      movementSpeed: 0
+      rotationSpeed: 2
 --- !u!208 &3261536659904043432
 NavMeshObstacle:
   m_ObjectHideFlags: 0

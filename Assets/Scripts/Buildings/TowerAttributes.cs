@@ -1,35 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using Entities;
+using UnityEngine;
 
 namespace Buildings
 {
-    public class TowerAttributes : MonoBehaviour
+    [Serializable]
+    public struct TowerAttributes
     {
-        [Header("Offensive attributes")] 
         [SerializeField]
-        private float range = 5;
-        public float Range => range;
+        private OffensiveAttributes offensiveAttributes;
+        public OffensiveAttributes OffensiveAttributesData => offensiveAttributes;
 
         [SerializeField] 
-        private float damage = 10;
-        public float Damage => damage;
+        private DefensiveAttributes defensiveAttributes;
+        public DefensiveAttributes DefensiveAttributesData => defensiveAttributes;
 
         [SerializeField] 
-        private float attackSpeed = 1;
-        public float AttackSpeed => attackSpeed;
-
-        [SerializeField]
-        private float rotationSpeed = 20;
-
-        public float RotationSpeed => rotationSpeed;
-
-        [SerializeField] 
-        private float projectileSpeed = 50;
-        public float ProjectileSpeed => projectileSpeed;
-        
-        [Header("Defensive attributes")]
-        [SerializeField]
-        private float health = 100;
-        public float Health => health;
-
+        private MovementAttributes movementAttributes;
+        public MovementAttributes MovementAttributesData => movementAttributes;
     }
 }
