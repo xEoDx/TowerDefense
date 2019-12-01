@@ -19,7 +19,7 @@ namespace UI
         private bool _isInitialized;
         private float _elapsedTime;
 
-        private void Start()
+        private void Awake()
         {
             _isInitialized = false;
             _playerController = FindObjectOfType<PlayerController>();

@@ -79,11 +79,11 @@ namespace Gameplay
             CurrentWaveNumber = 0;
 
             _enemySpawner = FindObjectOfType<EnemySpawner>();
+            _playerBase = FindObjectOfType<PlayerBase>();
         }
 
         private void Start()
         {
-            _playerBase = FindObjectOfType<PlayerBase>();
             _playerBase.OnBaseDestroyed += OnPlayerBaseDestroyed;
             
             // Allocate enemies on Start so that we don't need to create them during game play runtime

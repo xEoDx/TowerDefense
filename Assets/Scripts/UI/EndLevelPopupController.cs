@@ -9,11 +9,15 @@ public class EndLevelPopupController : MonoBehaviour
     [SerializeField] private GameObject winPopup;
     [SerializeField] private GameObject losePopup;
     
-    
-    private GameplayController _gameplayController;    
-    void Start()
+    private GameplayController _gameplayController;
+
+    private void Awake()
     {
         _gameplayController = FindObjectOfType<GameplayController>();
+    }
+
+    private void Start()
+    {
         _gameplayController.OnGameEnd += OnGameEndListener;
     }
 

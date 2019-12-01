@@ -16,11 +16,15 @@ public class WaveTimeLeftUpdater : MonoBehaviour
     private float _lastUpdateTime;
     private Wave? _currentWave;
     private int _currentWaveNumber;
-    
-    void Start()
+
+    private void Awake()
     {
         _gameplayController = FindObjectOfType<GameplayController>();
         _lastUpdateTime = 0;
+    }
+
+    void Start()
+    {
         UpdateNewSpawnTime();
         UpdateText();
     }

@@ -16,7 +16,7 @@ namespace UI
         private TowerPlacer _towerPlacer;
         private PlayerController _playerController;
     
-        private void Start()
+        private void Awake()
         {
             _button = GetComponent<Button>();
             _towerPlacer = FindObjectOfType<TowerPlacer>();

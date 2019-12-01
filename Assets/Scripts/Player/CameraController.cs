@@ -9,7 +9,7 @@ namespace Player
 
         private InputController _inputController;
 
-        private void Start()
+        private void Awake()
         {
             _inputController = FindObjectOfType<InputController>();
         }

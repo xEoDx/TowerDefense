@@ -51,17 +51,17 @@ namespace Buildings
         void Awake()
         {
             AmmoPool = GetComponent<AmmoPool>();
+            _gameplayController = FindObjectOfType<GameplayController>();
 
             _currentTarget = null;
             CurrentHealth = EntityAttributes.DefensiveAttributesData.Health;
         }
 
-        void Start()
+        private void Start()
         {
             _enemyMask = LayerMask.GetMask("Enemy");
             _obstacleMask = LayerMask.GetMask("Obstacle");
 
-            _gameplayController = FindObjectOfType<GameplayController>();
             AmmoPool.InitAmmoPool(EntityAttributes.OffensiveAttributesData.Damage,
                 EntityAttributes.OffensiveAttributesData.ProjectileSpeed);
 

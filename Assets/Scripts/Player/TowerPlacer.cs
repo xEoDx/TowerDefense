@@ -9,22 +9,21 @@ namespace Player
     public class TowerPlacer : MonoBehaviour
     {
         private Tower _tower;
-        private bool _isPlacing;
         private Camera _camera;
 
-        public bool IsPlacing => _isPlacing;
+        public bool IsPlacing { get; private set; }
 
         private InputController _inputController;
         private void Awake()
         {
+            IsPlacing = false;
             _camera = Camera.main;
-            _isPlacing = false;
             _inputController = FindObjectOfType<InputController>();
         }
 
         void Update()
         {
-            if (_isPlacing)
+            if (IsPlacing)
             {
                 RaycastHit hit;
                 bool isValidPosition = false;
@@ -50,7 +49,7 @@ namespace Player
                 if (isValidPosition && _inputController.IsTouching() && !EventSystem.current.IsPointerOverGameObject())
                 {
                     _tower.PlaceTower();
-                    _isPlacing = false;
+                    IsPlacing = false;
                     _tower.GetComponent<NavMeshObstacle>().enabled = true;
                 }
             }
@@ -60,7 +59,7 @@ namespace Player
         {
             _tower = tower;
             _tower.GetComponent<NavMeshObstacle>().enabled = false;
-            _isPlacing = true;
+            IsPlacing = true;
         }
     }
 }

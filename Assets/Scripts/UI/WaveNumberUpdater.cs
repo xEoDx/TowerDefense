@@ -11,10 +11,14 @@ namespace UI
         private GameplayController _gameplayController;
         private int _currentWave;
 
-        private void Start()
+        private void Awake()
         {
             _gameplayController = FindObjectOfType<GameplayController>();
             _currentWave = _gameplayController.CurrentWaveNumber;
+        }
+
+        private void Start()
+        {
             UpdateWaveNumber();
         }
 
