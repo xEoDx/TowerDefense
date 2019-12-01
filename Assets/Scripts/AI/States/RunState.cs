@@ -67,7 +67,7 @@ namespace AI.States
 
             var distanceToTarget = Vector3.Distance(_transform.position, _currentDestinationPosition);
 
-            if (distanceToTarget < 2)
+            if (distanceToTarget < 5)
             {
                 return typeof(DieState);
             }

@@ -39,7 +39,7 @@ namespace Gameplay
 
         private Vector3 GetRandomPosition()
         {
-            int index = Random.Range(0, spawnPoints.Length - 1);
+            int index = Random.Range(0, spawnPoints.Length);
             return spawnPoints[index].transform.position;
         }
 
