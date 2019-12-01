@@ -9,8 +9,8 @@ namespace AI.States
     {
         private static readonly int Die = Animator.StringToHash("die");
         
-        private Enemy _enemy;
-        private Animator _animator;
+        private readonly Enemy _enemy;
+        private readonly Animator _animator;
 
         public DieState(Enemy enemy) : base(enemy.gameObject)
         {

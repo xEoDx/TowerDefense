@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Buildings
 {
     [Serializable]
-    public struct TowerAttributes
+    public struct EntityAttributes
     {
         [SerializeField]
         private OffensiveAttributes offensiveAttributes;

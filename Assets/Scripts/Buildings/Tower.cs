@@ -20,13 +20,13 @@ namespace Buildings
 
         [SerializeField] private bool forceToPlacedState = false;
 
-        [SerializeField] private TowerAttributes towerAttributes;
+        [SerializeField] private EntityAttributes entityAttributes;
 
         #endregion
 
         #region Properties
 
-        public TowerAttributes TowerAttributes => towerAttributes;
+        public EntityAttributes EntityAttributes => entityAttributes;
 
         public AmmoPool AmmoPool { get; private set; }
         public bool IsPlaced { get; private set; }
@@ -53,7 +53,7 @@ namespace Buildings
             AmmoPool = GetComponent<AmmoPool>();
 
             _currentTarget = null;
-            CurrentHealth = TowerAttributes.DefensiveAttributesData.Health;
+            CurrentHealth = EntityAttributes.DefensiveAttributesData.Health;
         }
 
         void Start()
@@ -62,8 +62,8 @@ namespace Buildings
             _obstacleMask = LayerMask.GetMask("Obstacle");
 
             _gameplayController = FindObjectOfType<GameplayController>();
-            AmmoPool.InitAmmoPool(TowerAttributes.OffensiveAttributesData.Damage,
-                TowerAttributes.OffensiveAttributesData.ProjectileSpeed);
+            AmmoPool.InitAmmoPool(EntityAttributes.OffensiveAttributesData.Damage,
+                EntityAttributes.OffensiveAttributesData.ProjectileSpeed);
 
             _stateMachine = GetComponent<StateMachine>();
             var towerFsmStates = new Dictionary<Type, FSMState>
@@ -175,7 +175,7 @@ namespace Buildings
             var direction = enemyPosition - towerPosition;
             var hits = Physics.RaycastAll(towerPosition,
                 direction,
-                TowerAttributes.OffensiveAttributesData.Range,
+                EntityAttributes.OffensiveAttributesData.Range,
                 _enemyMask | _obstacleMask);
 
             var enemyDistance = float.MaxValue;

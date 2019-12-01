@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using AI.States;
 using Ammo;
+using Buildings;
 using Constants;
+using Entities;
 using FSM;
 using UnityEngine;
 
@@ -15,21 +17,8 @@ namespace AI
     {
         public static readonly float RayDistance = 2.0f;
 
-        [field: Header("Movement values")] public float MovementSpeed { get; } = 8;
-        public float RotationSpeed { get; } = 15;
-
-        [Header("Offensive values")] [SerializeField]
-        private float damage = 20F;
-
-        [SerializeField] private float projectileSpeed = 250;
-
-        public float AttackSpeed { get; } = 2.6F;
-
-        [Header("Defensive values")] [SerializeField]
-        private float health = 100;
-
-        public float Health => health;
-
+        [SerializeField] private EntityAttributes entityAttributes;
+        public EntityAttributes EntityAttributesData => entityAttributes;
 
         [Header("Other")] 
         [SerializeField] 
@@ -38,7 +27,6 @@ namespace AI
 
         public int Reward => reward;
 
-        [SerializeField]//TODO REMOVE
         private float _currentHealth;
         private AmmoPool _ammoPool;
 
@@ -48,8 +36,8 @@ namespace AI
         {
             _stateMachine = GetComponent<StateMachine>();
             _ammoPool = GetComponent<AmmoPool>();
-            _ammoPool.InitAmmoPool(damage, projectileSpeed);
-            _currentHealth = health;
+            _ammoPool.InitAmmoPool(entityAttributes.OffensiveAttributesData.Damage, entityAttributes.OffensiveAttributesData.ProjectileSpeed);
+            _currentHealth = entityAttributes.DefensiveAttributesData.Health;
             var playerBaseTransform = GameObject.FindWithTag(Tags.PlayerBase).transform;
 
             var states = new Dictionary<Type, FSMState>
@@ -76,7 +64,7 @@ namespace AI
 
         public void Reset()
         {
-            _currentHealth = health;
+            _currentHealth = entityAttributes.DefensiveAttributesData.Health;
         }
     }
 }

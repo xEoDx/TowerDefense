@@ -6,8 +6,8 @@ namespace AI.States
 {
     public class IdleState : FSMState
     {
-        private NavMeshAgent _agent;
-        private Enemy _enemy;
+        private readonly NavMeshAgent _agent;
+        private readonly Enemy _enemy;
         private float _elapsedTime;
         private float _totalTime;
 
@@ -21,7 +21,7 @@ namespace AI.States
 
         public override void Init()
         {
-            _agent.speed = _enemy.MovementSpeed;
+            _agent.speed = _enemy.EntityAttributesData.MovementAttributesData.MovementSpeed;
             
             _totalTime = UnityEngine.Random.Range(0, 1f);
         }

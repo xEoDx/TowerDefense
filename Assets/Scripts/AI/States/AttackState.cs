@@ -11,11 +11,11 @@ namespace AI.States
     public class AttackState : FSMState
     {
         private static readonly int Attack = Animator.StringToHash("attack");
-        private Enemy _enemy;
-        private AmmoPool _ammoPool;
-        private Transform _transform;
+        private readonly Enemy _enemy;
+        private readonly AmmoPool _ammoPool;
+        private readonly Transform _transform;
+        private readonly Animator _animator;
         private Tower _currentTarget;
-        private Animator _animator;
 
         private float _lastAttackTime;
 
@@ -44,7 +44,7 @@ namespace AI.States
 
             if (_currentTarget != null)
             {
-                if (_lastAttackTime >= _enemy.AttackSpeed)
+                if (_lastAttackTime >= _enemy.EntityAttributesData.OffensiveAttributesData.AttackSpeed)
                 {
                     _ammoPool.Shoot(_currentTarget.transform.position);
                     _lastAttackTime = 0;

@@ -11,11 +11,11 @@ namespace AI.States
         private static readonly int Run = Animator.StringToHash("run");
         private static readonly int WalkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
 
-        private Enemy _enemy;
-        private Animator _animator;
-        private NavMeshAgent _agent;
-        private Transform _transform;
-        private Transform _playerBaseTransform;
+        private readonly Enemy _enemy;
+        private readonly Animator _animator;
+        private readonly NavMeshAgent _agent;
+        private readonly Transform _transform;
+        private readonly Transform _playerBaseTransform;
         private Vector3 _currentDestinationPosition;
         private float _stuckElapsedTime;
 
@@ -77,7 +77,7 @@ namespace AI.States
         private void UpdateRotation()
         {
             var direction = _currentDestinationPosition - _transform.position;
-            float step = _enemy.RotationSpeed * Time.deltaTime;
+            float step = _enemy.EntityAttributesData.MovementAttributesData.RotationSpeed * Time.deltaTime;
 
             Vector3 newDirection = Vector3.RotateTowards(_transform.forward, direction, step, 0.0f);
 
