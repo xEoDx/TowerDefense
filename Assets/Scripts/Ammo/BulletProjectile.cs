@@ -5,61 +5,75 @@ using UnityEngine;
 
 namespace Ammo
 {
-    public class BulletProjectile : Projectile
+    public class BulletProjectile : MonoBehaviour, IProjectile
     {
+        public float LifeTime { get; private set; }
+        public float Damage { get; private set; }
+        public float Speed { get; private set; }
+        public bool IsReady { get; private set; }
+
+        private Vector3 _target;
+        private float _elapsedLifeTime;
+
         private MeshRenderer _meshRenderer;
+
+        public void Init(float damage, float attackRate)
+        {
+            Damage = damage;
+            Speed = attackRate;
+        }
 
         public void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
-            ResetProjectile();
+            LifeTime = 2f;
+            Reset();
         }
 
         private void Update()
         {
-            if (!isReady)
+            if (!IsReady)
             {
-                if (ElapsedLifeTime > LifeTime)
+                if (_elapsedLifeTime > LifeTime)
                 {
-                    ResetProjectile();
+                    Reset();
                 }
 
-                ElapsedLifeTime += Time.deltaTime;
+                _elapsedLifeTime += Time.deltaTime;
                 
-                transform.position = Vector3.MoveTowards(transform.position, Target, projectileSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, _target, Speed * Time.deltaTime);
             }
         }
 
-        public override void Shoot(Vector3 position)
+        public void Shoot(Vector3 position)
         {
-            isReady = false;
-            Target = position;
+            IsReady = false;
+            _target = position;
             transform.localPosition = Vector3.zero;
             _meshRenderer.enabled = true;
         }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(Tags.Tower) && transform.CompareTag(Tags.EnemyAmmo))
             {
                 var tower = other.GetComponent<ITower>();
-                tower.ReceiveDamage(damage);
-                ResetProjectile();
+                tower.ReceiveDamage(Damage);
+                Reset();
             }
             else if (other.CompareTag(Tags.Enemy) && transform.CompareTag(Tags.PlayerAmmo))
             {
                 var enemy = other.GetComponent<BasicEnemy>();
-                enemy.ReceiveDamage(damage);
-                ResetProjectile();
+                enemy.ReceiveDamage(Damage);
+                Reset();
             }
         }
 
-        private void ResetProjectile()
+        public void Reset()
         {
-            isReady = true;
+            IsReady = true;
             _meshRenderer.enabled = false;
             transform.localPosition = Vector3.zero;
-            ElapsedLifeTime = 0;
+            _elapsedLifeTime = 0;
         }
     }
 }

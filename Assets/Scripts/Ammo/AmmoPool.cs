@@ -18,11 +18,11 @@ namespace Ammo
         [SerializeField] private Transform projectileParentTransform;
         [SerializeField] private int poolSize = 10;
 
-        private IList<Projectile> _projectiles;
+        private IList<IProjectile> _projectiles;
 
         private void Awake()
         {
-            _projectiles = new List<Projectile>(poolSize);
+            _projectiles = new List<IProjectile>(poolSize);
         }
 
         public void InitAmmoPool(float projectileDamage, float projectileSpeed)
@@ -42,7 +42,7 @@ namespace Ammo
                         Debug.LogError("Owner for AmmoPool not set up in GameObject: "+transform.name);
                         break;
                 }
-                var projectile = projectileObject.GetComponent<Projectile>();
+                var projectile = projectileObject.GetComponent<IProjectile>();
                 projectile.Init(projectileDamage, projectileSpeed);
                 _projectiles.Add(projectile);
             }
