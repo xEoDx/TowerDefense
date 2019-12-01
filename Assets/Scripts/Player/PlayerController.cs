@@ -47,9 +47,9 @@ namespace Player
             OnIncomeUpdated?.Invoke(updatedIncome);
         }
 
-        private void OnEnemyDeadListener(Enemy enemy)
+        private void OnEnemyDeadListener(BasicEnemy basicEnemy)
         {
-            AddIncome(enemy.Reward);
+            AddIncome(basicEnemy.Reward);
         }
     }
 }

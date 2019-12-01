@@ -11,7 +11,7 @@ namespace AI.States
         private static readonly float StuckTimeThreshold = 5.0f;
         private static readonly int Run = Animator.StringToHash("run");
 
-        private readonly Enemy _enemy;
+        private readonly BasicEnemy _basicEnemy;
         private readonly Animator _animator;
         private readonly NavMeshAgent _agent;
         private readonly Transform _transform;
@@ -19,12 +19,12 @@ namespace AI.States
         private Vector3 _currentDestinationPosition;
         private float _stuckElapsedTime;
 
-        public RunState(Enemy enemy, Transform playerBaseTransform) : base(enemy)
+        public RunState(BasicEnemy basicEnemy, Transform playerBaseTransform) : base(basicEnemy)
         {
             _transform = component.transform;
             _animator = _transform.GetChild(0).GetComponent<Animator>();
             _agent = _transform.GetComponent<NavMeshAgent>();
-            _enemy = enemy;
+            _basicEnemy = basicEnemy;
             _playerBaseTransform = playerBaseTransform;
         }
 
@@ -34,7 +34,7 @@ namespace AI.States
             _currentDestinationPosition = _playerBaseTransform.position;
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(_currentDestinationPosition, out hit, Enemy.RayDistance * 5f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(_currentDestinationPosition, out hit, BasicEnemy.RayDistance * 5f, NavMesh.AllAreas))
             {
                 _currentDestinationPosition = hit.position;
             }
@@ -44,7 +44,7 @@ namespace AI.States
 
         public override Type Execute()
         {
-            if (_enemy.IsDead())
+            if (_basicEnemy.IsDead())
             {
                 return typeof(DieState);
             }
@@ -75,7 +75,7 @@ namespace AI.States
         private void UpdateRotation()
         {
             var direction = _currentDestinationPosition - _transform.position;
-            float step = _enemy.EntityAttributesData.MovementAttributesData.RotationSpeed * Time.deltaTime;
+            float step = _basicEnemy.EntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
 
             Vector3 newDirection = Vector3.RotateTowards(_transform.forward, direction, step, 0.0f);
 
@@ -85,10 +85,10 @@ namespace AI.States
         private bool IsCollidingWithTower()
         {
             int layerMask = 1 << 9;
-            Debug.DrawRay(_transform.position, _transform.forward * Enemy.RayDistance, Color.white);
+            Debug.DrawRay(_transform.position, _transform.forward * BasicEnemy.RayDistance, Color.white);
 
             RaycastHit hit;        
-            if (Physics.Raycast(_transform.position, _transform.forward, out hit, Enemy.RayDistance, layerMask))
+            if (Physics.Raycast(_transform.position, _transform.forward, out hit, BasicEnemy.RayDistance, layerMask))
             {
                 return true;
             }

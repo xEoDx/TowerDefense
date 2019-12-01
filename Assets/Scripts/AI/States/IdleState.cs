@@ -8,21 +8,21 @@ namespace AI.States
     public class IdleState : FsmState
     {
         private readonly NavMeshAgent _agent;
-        private readonly Enemy _enemy;
+        private readonly BasicEnemy _basicEnemy;
         private float _elapsedTime;
         private float _totalTime;
 
-        public IdleState(Enemy enemy) : base(enemy)
+        public IdleState(BasicEnemy basicEnemy) : base(basicEnemy)
         {
-            _agent = enemy.transform.GetComponent<NavMeshAgent>();
-            _enemy = enemy;
+            _agent = basicEnemy.transform.GetComponent<NavMeshAgent>();
+            _basicEnemy = basicEnemy;
             _elapsedTime = 0;
             _totalTime = 0;
         }
 
         public override void Init()
         {
-            _agent.speed = _enemy.EntityAttributesData.MovementAttributesData.MovementSpeed;
+            _agent.speed = _basicEnemy.EntityAttributes.MovementAttributesData.MovementSpeed;
             
             _totalTime = UnityEngine.Random.Range(0, 1f);
         }

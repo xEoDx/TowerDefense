@@ -16,7 +16,7 @@ namespace Gameplay
     public class GameplayController : MonoBehaviour
     {
         #region Events
-        public event Action<Enemy> OnEnemyDead;
+        public event Action<BasicEnemy> OnEnemyDead;
         public event Action<GameEndReason> OnGameEnd;
         #endregion
         
@@ -36,7 +36,7 @@ namespace Gameplay
         
         private StateMachine _stateStateMachine;
         private EnemySpawner _enemySpawner;
-        private List<Enemy> _activeEnemies;
+        private List<BasicEnemy> _activeEnemies;
         private PlayerBase _playerBase;
         private LevelData _levelData;
         #endregion
@@ -89,7 +89,7 @@ namespace Gameplay
         #region Methods
 
 
-        public IList<Enemy> GetActiveEnemies()
+        public IList<BasicEnemy> GetActiveEnemies()
         {
             return _activeEnemies;
         }
@@ -138,7 +138,7 @@ namespace Gameplay
         private void InitLevelData()
         {
             TotalWavesCount = _levelData.Level.Waves.Count;
-            _activeEnemies = new List<Enemy>();
+            _activeEnemies = new List<BasicEnemy>();
             CurrentWaveNumber = 0;
             _enemySpawner = FindObjectOfType<EnemySpawner>();
         }

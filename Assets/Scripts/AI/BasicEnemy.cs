@@ -13,12 +13,12 @@ namespace AI
 {
     [RequireComponent(typeof(StateMachine))]
     [RequireComponent(typeof(AmmoPool))]
-    public class Enemy : MonoBehaviour
+    public class BasicEnemy : MonoBehaviour, IEnemy
     {
         public static readonly float RayDistance = 2.0f;
 
-        [SerializeField] private EntityAttributes entityAttributes;
-        public EntityAttributes EntityAttributesData => entityAttributes;
+        [SerializeField] private EntityAttributes enemyAttributes;
+        public EntityAttributes EntityAttributes { get; }
 
         [Header("Other")] 
         [SerializeField] 
@@ -36,8 +36,8 @@ namespace AI
         {
             _stateMachine = GetComponent<StateMachine>();
             _ammoPool = GetComponent<AmmoPool>();
-            _ammoPool.InitAmmoPool(entityAttributes.OffensiveAttributesData.Damage, entityAttributes.OffensiveAttributesData.ProjectileSpeed);
-            _currentHealth = entityAttributes.DefensiveAttributesData.Health;
+            _ammoPool.InitAmmoPool(enemyAttributes.OffensiveAttributesData.Damage, enemyAttributes.OffensiveAttributesData.ProjectileSpeed);
+            _currentHealth = enemyAttributes.DefensiveAttributesData.Health;
             var playerBaseTransform = GameObject.FindWithTag(Tags.PlayerBase).transform;
 
             var states = new Dictionary<Type, FsmState>
@@ -64,7 +64,9 @@ namespace AI
 
         public void Reset()
         {
-            _currentHealth = entityAttributes.DefensiveAttributesData.Health;
+            _currentHealth = enemyAttributes.DefensiveAttributesData.Health;
         }
+
+        
     }
 }

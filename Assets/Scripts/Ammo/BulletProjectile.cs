@@ -48,7 +48,7 @@ namespace Ammo
             }
             else if (other.CompareTag(Tags.Enemy) && transform.CompareTag(Tags.PlayerAmmo))
             {
-                var enemy = other.GetComponent<Enemy>();
+                var enemy = other.GetComponent<BasicEnemy>();
                 enemy.ReceiveDamage(damage);
                 ResetProjectile();
             }

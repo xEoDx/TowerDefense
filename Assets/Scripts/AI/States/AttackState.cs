@@ -12,7 +12,7 @@ namespace AI.States
     public class AttackState : FsmState
     {
         private static readonly int Attack = Animator.StringToHash("attack");
-        private readonly Enemy _enemy;
+        private readonly BasicEnemy _basicEnemy;
         private readonly AmmoPool _ammoPool;
         private readonly Transform _transform;
         private readonly Animator _animator;
@@ -20,12 +20,12 @@ namespace AI.States
 
         private float _lastAttackTime;
 
-        public AttackState(Enemy enemy) : base(enemy)
+        public AttackState(BasicEnemy basicEnemy) : base(basicEnemy)
         {
-            _transform = enemy.transform;
-            _ammoPool = enemy.GetComponent<AmmoPool>();
+            _transform = basicEnemy.transform;
+            _ammoPool = basicEnemy.GetComponent<AmmoPool>();
             _animator = _transform.GetChild(0).GetComponent<Animator>();
-            _enemy = enemy;
+            _basicEnemy = basicEnemy;
             _lastAttackTime = 0;
         }
 
@@ -36,7 +36,7 @@ namespace AI.States
 
         public override Type Execute()
         {
-            if (_enemy.IsDead())
+            if (_basicEnemy.IsDead())
             {
                 return typeof(DieState);
             }
@@ -45,7 +45,7 @@ namespace AI.States
 
             if (_currentTarget != null)
             {
-                if (_lastAttackTime >= _enemy.EntityAttributesData.OffensiveAttributesData.AttackSpeed)
+                if (_lastAttackTime >= _basicEnemy.EntityAttributes.OffensiveAttributesData.AttackSpeed)
                 {
                     _ammoPool.Shoot(_currentTarget.GetTransform.position);
                     _lastAttackTime = 0;
@@ -65,10 +65,10 @@ namespace AI.States
         ITower GetClosestTower()
         {
             int layerMask = Layers.Tower;
-            Debug.DrawRay(_transform.position, _transform.forward * Enemy.RayDistance, Color.red);
+            Debug.DrawRay(_transform.position, _transform.forward * BasicEnemy.RayDistance, Color.red);
 
             RaycastHit hit;        
-            if (Physics.Raycast(_transform.position, _transform.forward, out hit, Enemy.RayDistance, layerMask))
+            if (Physics.Raycast(_transform.position, _transform.forward, out hit, BasicEnemy.RayDistance, layerMask))
             {
                 var tower = hit.transform.GetComponent<ITower>();
 

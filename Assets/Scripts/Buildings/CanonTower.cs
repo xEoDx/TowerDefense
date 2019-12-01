@@ -23,7 +23,7 @@ namespace Buildings
         #endregion
 
         #region Properties
-        public EntityAttributes TowerEntityAttributes { get; private set; }
+        public EntityAttributes EntityAttributes { get; private set; }
         public AmmoPool AmmoPool { get; private set; }
         public bool IsPlaced { get; private set; }
         public Transform GetTransform => transform;
@@ -35,7 +35,7 @@ namespace Buildings
         private GameplayController _gameplayController;
         private StateMachine _stateMachine;
         private PlayerData _playerData;
-        private Enemy _currentTarget;
+        private BasicEnemy _currentTarget;
         private float _currentHealth;
 
         private int _enemyMask;
@@ -58,11 +58,11 @@ namespace Buildings
             _enemyMask = LayerMask.GetMask("Enemy");
             _obstacleMask = LayerMask.GetMask("Obstacle");
 
-            TowerEntityAttributes = _playerData.CanonEntityAttributes;
-            _currentHealth = TowerEntityAttributes.DefensiveAttributesData.Health;
+            EntityAttributes = _playerData.CanonEntityAttributes;
+            _currentHealth = EntityAttributes.DefensiveAttributesData.Health;
 
-            AmmoPool.InitAmmoPool(TowerEntityAttributes.OffensiveAttributesData.Damage,
-                TowerEntityAttributes.OffensiveAttributesData.ProjectileSpeed);
+            AmmoPool.InitAmmoPool(EntityAttributes.OffensiveAttributesData.Damage,
+                EntityAttributes.OffensiveAttributesData.ProjectileSpeed);
 
             _stateMachine = GetComponent<StateMachine>();
             var towerFsmStates = new Dictionary<Type, FsmState>
@@ -145,14 +145,14 @@ namespace Buildings
             }
         }
 
-        public Enemy GetCurrentTarget()
+        public BasicEnemy GetCurrentTarget()
         {
             return _currentTarget;
         }
 
-        public void SetTarget(Enemy enemy)
+        public void SetTarget(BasicEnemy basicEnemy)
         {
-            _currentTarget = enemy;
+            _currentTarget = basicEnemy;
         }
 
         public void PlaceTower()
@@ -176,7 +176,7 @@ namespace Buildings
             var direction = enemyPosition - towerPosition;
             var hits = Physics.RaycastAll(towerPosition,
                 direction,
-                TowerEntityAttributes.OffensiveAttributesData.Range,
+                EntityAttributes.OffensiveAttributesData.Range,
                 _enemyMask | _obstacleMask);
 
             var enemyDistance = float.MaxValue;
@@ -208,7 +208,7 @@ namespace Buildings
             return _currentHealth > 0;
         }
 
-        public IList<Enemy> GetActiveEnemies()
+        public IList<BasicEnemy> GetActiveEnemies()
         {
             return _gameplayController.GetActiveEnemies();
         }

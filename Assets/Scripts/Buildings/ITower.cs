@@ -1,12 +1,12 @@
 using AI;
 using Ammo;
+using Constants;
 using UnityEngine;
 
 namespace Buildings
 {
-    public interface ITower
+    public interface ITower : IEntity
     {
-        EntityAttributes TowerEntityAttributes { get; }
         AmmoPool AmmoPool { get; }
         bool IsPlaced { get; }
         Transform GetTransform { get; }

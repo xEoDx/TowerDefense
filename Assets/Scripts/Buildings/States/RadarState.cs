@@ -23,24 +23,24 @@ namespace Buildings.States
         {
             UpdateRotation();
 
-            Enemy closestEnemy = null;
+            BasicEnemy closestBasicEnemy = null;
             float closestEnemyDistance = float.MaxValue;
             foreach (var enemy in _canonTower.GetActiveEnemies())
             {
                 var distance = Vector3.Distance(enemy.transform.position, _canonTower.transform.position);
-                if (distance < _canonTower.TowerEntityAttributes.OffensiveAttributesData.Range)
+                if (distance < _canonTower.EntityAttributes.OffensiveAttributesData.Range)
                 {
                     if (!_canonTower.IsBlockedByObstacle(enemy.transform.position) && distance < closestEnemyDistance)
                     {
                         closestEnemyDistance = distance;
-                        closestEnemy = enemy;
+                        closestBasicEnemy = enemy;
                     }
                 }
             }
 
-            if (closestEnemy != null)
+            if (closestBasicEnemy != null)
             {
-                _canonTower.SetTarget(closestEnemy);
+                _canonTower.SetTarget(closestBasicEnemy);
                 return typeof(AttackState);
             }
 
@@ -52,7 +52,7 @@ namespace Buildings.States
         
         private void UpdateRotation()
         {
-            float step = _canonTower.TowerEntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
+            float step = _canonTower.EntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
             _canonTower.RotatingElementTransform.rotation = Quaternion.Lerp(_canonTower.RotatingElementTransform.rotation, Quaternion.identity, step);
         }
     }

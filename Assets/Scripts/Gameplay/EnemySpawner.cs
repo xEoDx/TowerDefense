@@ -10,7 +10,7 @@ namespace Gameplay
     {
         [SerializeField] private GameObject[] spawnPoints;
         
-        private IDictionary<EnemyType, IList<Enemy>> _spawnedEnemies;
+        private IDictionary<EnemyType, IList<BasicEnemy>> _spawnedEnemies;
 
 
         public enum EnemyType
@@ -29,16 +29,16 @@ namespace Gameplay
 
         public void Init(IDictionary<EnemyType, int> enemiesToSpawn)
         {
-            _spawnedEnemies = new Dictionary<EnemyType, IList<Enemy>>(enemiesToSpawn.Count);
+            _spawnedEnemies = new Dictionary<EnemyType, IList<BasicEnemy>>(enemiesToSpawn.Count);
             foreach (var kvp in enemiesToSpawn)
             {
-                IList<Enemy> instantiatedEnemyPrefabsList = new List<Enemy>(kvp.Value);
+                IList<BasicEnemy> instantiatedEnemyPrefabsList = new List<BasicEnemy>(kvp.Value);
                 for (int i = 0; i < kvp.Value; i++)
                 {
                     var prefabPath = _enemyToPrefabPathDictionary[kvp.Key];
                     var enemy = Instantiate(Resources.Load<GameObject>(prefabPath));
                     enemy.SetActive(false);
-                    instantiatedEnemyPrefabsList.Add(enemy.GetComponent<Enemy>());
+                    instantiatedEnemyPrefabsList.Add(enemy.GetComponent<BasicEnemy>());
                 }
                 _spawnedEnemies.Add(kvp.Key, instantiatedEnemyPrefabsList);
             }
@@ -50,9 +50,9 @@ namespace Gameplay
             return spawnPoints[index].transform.position;
         }
 
-        public IList<Enemy> Enable(EnemyType type, int amount)
+        public IList<BasicEnemy> Enable(EnemyType type, int amount)
         {
-            IList<Enemy> enemies = new List<Enemy>(amount);
+            IList<BasicEnemy> enemies = new List<BasicEnemy>(amount);
             var enemiesFromType = _spawnedEnemies[type];
             if (enemiesFromType.Count < amount)
             {

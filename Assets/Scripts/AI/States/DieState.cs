@@ -10,20 +10,20 @@ namespace AI.States
     {
         private static readonly int Die = Animator.StringToHash("die");
         
-        private readonly Enemy _enemy;
+        private readonly BasicEnemy _basicEnemy;
         private readonly Animator _animator;
 
-        public DieState(Enemy enemy) : base(enemy)
+        public DieState(BasicEnemy basicEnemy) : base(basicEnemy)
         {
-            _animator = enemy.transform.GetChild(0).GetComponent<Animator>();
-            _enemy = enemy;
+            _animator = basicEnemy.transform.GetChild(0).GetComponent<Animator>();
+            _basicEnemy = basicEnemy;
         }
 
         public override void Init()
         {
             // TODO play some particles
             _animator.SetTrigger(Die);
-            _enemy.gameObject.SetActive(false);
+            _basicEnemy.gameObject.SetActive(false);
             
         }
 

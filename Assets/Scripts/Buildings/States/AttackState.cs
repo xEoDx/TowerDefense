@@ -12,7 +12,7 @@ namespace Buildings.States
 
         private readonly CanonTower _canonTower;
         private readonly AmmoPool _ammoPool;
-        private Enemy _currentTarget;
+        private BasicEnemy _currentTarget;
         private Transform _enemyTransform;
         private float _attackElapsedTime;
         private float _elapsedStuckTime;
@@ -35,7 +35,7 @@ namespace Buildings.States
         {
             if (_currentTarget.IsDead() ||
                 Vector3.Distance(_enemyTransform.position, _canonTower.transform.position) >
-                _canonTower.TowerEntityAttributes.OffensiveAttributesData.Range)
+                _canonTower.EntityAttributes.OffensiveAttributesData.Range)
             {
                 return typeof(RadarState);
             }
@@ -47,7 +47,7 @@ namespace Buildings.States
                 if (!_canonTower.IsBlockedByObstacle(_enemyTransform.position))
                 {
                     _elapsedStuckTime = 0;
-                    if (_attackElapsedTime > _canonTower.TowerEntityAttributes.OffensiveAttributesData.AttackSpeed)
+                    if (_attackElapsedTime > _canonTower.EntityAttributes.OffensiveAttributesData.AttackSpeed)
                     {
                         _attackElapsedTime = 0;
                         _canonTower.Attack(_enemyTransform.position);
@@ -85,7 +85,7 @@ namespace Buildings.States
         private void UpdateRotation()
         {
             var direction = _enemyTransform.position - _canonTower.transform.position;
-            float step = _canonTower.TowerEntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
+            float step = _canonTower.EntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
 
             Vector3 newDirection =
                 Vector3.RotateTowards(_canonTower.RotatingElementTransform.forward, direction, step, 0.0f);
