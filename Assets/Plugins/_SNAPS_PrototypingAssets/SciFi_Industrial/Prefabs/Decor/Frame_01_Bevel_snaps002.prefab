@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4845387934970294}
   - component: {fileID: 33394629277428980}
   - component: {fileID: 23330404869233338}
-  - component: {fileID: 64878497804755774}
   m_Layer: 0
   m_Name: Frame_01_Bevel_snaps002
   m_TagString: Untagged
@@ -78,17 +77,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64878497804755774
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907253897837854}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 95dd2c47a0d75fd42b02bbf961c2b225, type: 2}

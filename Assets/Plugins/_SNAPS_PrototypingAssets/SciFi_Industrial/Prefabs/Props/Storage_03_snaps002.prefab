@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4214997939682252}
   - component: {fileID: 33333961306265238}
   - component: {fileID: 23085772919944206}
-  - component: {fileID: 64341410318838332}
   m_Layer: 0
   m_Name: Storage_03_snaps002
   m_TagString: Untagged
@@ -79,17 +78,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64341410318838332
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979597668804254}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 6cc6621e3581f3449b0e01aa95ebe997, type: 2}

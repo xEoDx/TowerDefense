@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4265533337546500}
   - component: {fileID: 33988284293362796}
   - component: {fileID: 23247710616363506}
-  - component: {fileID: 64338455686857700}
   m_Layer: 0
   m_Name: Frame_01_snaps002
   m_TagString: Untagged
@@ -78,17 +77,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64338455686857700
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663125838579712}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 8403ec3e81b3295449373804ce26f2b7, type: 2}

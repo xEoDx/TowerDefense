@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4218946168670328}
   - component: {fileID: 33959880119431890}
   - component: {fileID: 23845424831015320}
-  - component: {fileID: 64815769448152428}
   m_Layer: 0
   m_Name: GuardRail_01_snaps002
   m_TagString: Untagged
@@ -78,17 +77,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64815769448152428
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1938284170932658}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: db658b635d5b9fa4286c4dc7c29ea640, type: 2}

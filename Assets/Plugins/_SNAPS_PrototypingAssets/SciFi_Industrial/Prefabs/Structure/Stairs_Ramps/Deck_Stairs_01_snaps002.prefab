@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4559373026366574}
   - component: {fileID: 33495531838910542}
   - component: {fileID: 23604216745311250}
-  - component: {fileID: 64903564319671400}
   m_Layer: 0
   m_Name: Deck_Stairs_01_snaps002
   m_TagString: Untagged
@@ -80,17 +79,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64903564319671400
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1594443926341102}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 901ca126ece8194488f0f3ca8b386fa4, type: 2}

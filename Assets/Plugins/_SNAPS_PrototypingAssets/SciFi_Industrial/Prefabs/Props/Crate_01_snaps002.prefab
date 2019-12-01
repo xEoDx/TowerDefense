@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4395347528790848}
   - component: {fileID: 33803424242832120}
   - component: {fileID: 23030378841077804}
-  - component: {fileID: 64809670006545498}
   m_Layer: 0
   m_Name: Crate_01_snaps002
   m_TagString: Untagged
@@ -78,17 +77,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64809670006545498
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412463589006636}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: a00abb210252f144f99c373de91b2877, type: 2}

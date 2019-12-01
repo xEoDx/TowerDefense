@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4705943439539350}
   - component: {fileID: 33374305516590984}
   - component: {fileID: 23825814236212206}
-  - component: {fileID: 64274297101511246}
   m_Layer: 0
   m_Name: Hale_Wall_Support_01_snaps002
   m_TagString: Untagged
@@ -78,17 +77,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64274297101511246
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009229941128900}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 631aa016600bdb94c864f2ad90417477, type: 2}

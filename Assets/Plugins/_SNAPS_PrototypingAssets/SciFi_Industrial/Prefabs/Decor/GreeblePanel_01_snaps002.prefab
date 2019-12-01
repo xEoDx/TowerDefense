@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4600020563756156}
   - component: {fileID: 33505706794873968}
   - component: {fileID: 23160594909768304}
-  - component: {fileID: 64838534189356774}
   m_Layer: 0
   m_Name: GreeblePanel_01_snaps002
   m_TagString: Untagged
@@ -78,17 +77,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64838534189356774
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088579187736380}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: b18556cded6bf1e4f93bc9b8e055ed97, type: 2}

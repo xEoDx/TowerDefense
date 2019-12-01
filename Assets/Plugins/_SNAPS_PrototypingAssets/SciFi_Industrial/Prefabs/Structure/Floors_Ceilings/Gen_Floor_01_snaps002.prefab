@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4934334823918846}
   - component: {fileID: 33165029273048932}
   - component: {fileID: 23609117320337716}
-  - component: {fileID: 65627649887743982}
   m_Layer: 0
   m_Name: Gen_Floor_01_snaps002
   m_TagString: Untagged
@@ -79,16 +78,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &65627649887743982
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418603965074362}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 0.125, z: 3}
-  m_Center: {x: 1.5, y: -0.0625, z: 1.5}

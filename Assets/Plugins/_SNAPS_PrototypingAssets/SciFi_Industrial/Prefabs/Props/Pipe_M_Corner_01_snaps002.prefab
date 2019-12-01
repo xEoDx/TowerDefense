@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4272111705749620}
   - component: {fileID: 33854150367039948}
   - component: {fileID: 23477091517516608}
-  - component: {fileID: 64445356101818792}
   m_Layer: 0
   m_Name: Pipe_M_Corner_01_snaps002
   m_TagString: Untagged
@@ -78,17 +77,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64445356101818792
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1154922107760960}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: a42878f16565df448890f77cb7139bb5, type: 2}

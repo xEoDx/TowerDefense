@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4679773111728864}
   - component: {fileID: 33626532004108466}
   - component: {fileID: 23434847006468676}
-  - component: {fileID: 65366433573631306}
   m_Layer: 0
   m_Name: Deck_FloorCeiling_01_snaps002
   m_TagString: Untagged
@@ -80,16 +79,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &65366433573631306
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1409081151409220}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.000025, y: 0.2500012, z: 3.0000248}
-  m_Center: {x: 1.5000001, y: 0.124999404, z: 1.4999993}

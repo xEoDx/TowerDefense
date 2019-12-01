@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4894790984704854}
   - component: {fileID: 33019569086357906}
   - component: {fileID: 23062723186836528}
-  - component: {fileID: 64636662752195550}
   m_Layer: 0
   m_Name: Bolton_M_01_snaps002
   m_TagString: Untagged
@@ -79,17 +78,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64636662752195550
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614356164510230}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 03cc1182a5812284ea0a02bb9943ca2a, type: 2}

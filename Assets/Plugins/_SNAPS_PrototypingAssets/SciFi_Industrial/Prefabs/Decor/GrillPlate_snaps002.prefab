@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4683149234187932}
   - component: {fileID: 33486646155122616}
   - component: {fileID: 23470231015256640}
-  - component: {fileID: 64747083487570800}
   m_Layer: 0
   m_Name: GrillPlate_snaps002
   m_TagString: Untagged
@@ -79,17 +78,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64747083487570800
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378694281990664}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: cf9055618b93ac647864b9625b54d1de, type: 2}

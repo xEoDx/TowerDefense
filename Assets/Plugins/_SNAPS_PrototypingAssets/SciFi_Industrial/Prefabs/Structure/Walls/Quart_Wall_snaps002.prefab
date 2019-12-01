@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4922272387448978}
   - component: {fileID: 33119041017975048}
   - component: {fileID: 23656710412320056}
-  - component: {fileID: 64073859049221592}
   m_Layer: 0
   m_Name: Quart_Wall_snaps002
   m_TagString: Untagged
@@ -79,17 +78,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64073859049221592
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1101722472418354}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 230d743c9645b694ea0a337a48709ef0, type: 2}
