@@ -12,7 +12,7 @@ namespace Gameplay.States
 
         public override void Init()
         {
-            _gameplayController.TriggerGameEnd(GameplayController.GameEndReason.LOSE);
+            _gameplayController.TriggerGameEnd(GameplayController.GameEndReason.Lose);
         }
 
         public override Type Execute()

@@ -19,6 +19,11 @@ namespace Gameplay.States
 
         public override Type Execute()
         {
+            if (_gameplayController.ShouldTriggerGameLose)
+            {
+                return typeof(LoseState);
+            }
+            
             if (_gameplayController.CurrentWaveNumber < _gameplayController.TotalWavesCount)
             {
                 if (_elapsedTime > _gameplayController.GetCurrentWave()?.TimeToSpawn)
@@ -27,10 +32,12 @@ namespace Gameplay.States
                 }
                 
                 _elapsedTime += Time.deltaTime;
-                return typeof(AwaitingState);
+            }
+            else if (_gameplayController.GetActiveEnemies().Count == 0)
+            {
+                return typeof(WinState);
             }
 
-            //TODO all rounds complete = End state
             return typeof(AwaitingState);
         }
 

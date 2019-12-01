@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AI;
+using Buildings;
 using Gameplay.States;
 using Player;
 using UnityEngine;
@@ -20,23 +21,24 @@ namespace Gameplay
         #region Properties
         public int CurrentWaveNumber { get; private set; }
         public int TotalWavesCount { get; private set; }
+        public bool ShouldTriggerGameLose { get; private set; }
         #endregion
         
         #region Fields
 
         public enum GameEndReason
         {
-            WIN,
-            LOSE
+            Win,
+            Lose
         }
         
         private StateMachine _stateStateMachine;
         private EnemySpawner _enemySpawner;
         private List<Enemy> _activeEnemies;
-        private PlayerController _playerController;
+        private PlayerBase _playerBase;
 
         //TODO READ FROM JSON FILE
-        private static Level Level;
+        private static Level _level;
         #endregion
 
         #region Unity Event Functions
@@ -71,9 +73,9 @@ namespace Gameplay
 
             var startingIncome = 1000;
 
-            Level = new Level(waves, startingIncome);
+            _level = new Level(waves, startingIncome);
 
-            TotalWavesCount = Level.Waves.Count;
+            TotalWavesCount = _level.Waves.Count;
             CurrentWaveNumber = 0;
 
             _enemySpawner = FindObjectOfType<EnemySpawner>();
@@ -81,12 +83,13 @@ namespace Gameplay
 
         private void Start()
         {
-            _playerController = FindObjectOfType<PlayerController>();
+            _playerBase = FindObjectOfType<PlayerBase>();
+            _playerBase.OnBaseDestroyed += OnPlayerBaseDestroyed;
             
             // Allocate enemies on Start so that we don't need to create them during game play runtime
             IDictionary<EnemySpawner.EnemyType, int> maxEnemiesPerTypeToSpawn =
                 new Dictionary<EnemySpawner.EnemyType, int>();
-            foreach (var wave in Level.Waves)
+            foreach (var wave in _level.Waves)
             {
                 foreach (var kvp in wave.WaveEnemies)
                 {
@@ -110,10 +113,12 @@ namespace Gameplay
         {
             UpdatedEnabledEnemiesList();
         }
-        #endregion
 
+        #endregion
+        
         #region Methods
-       
+
+
         public IList<Enemy> GetActiveEnemies()
         {
             return _activeEnemies;
@@ -137,7 +142,7 @@ namespace Gameplay
 
         public int GetStartingIncome()
         {
-            return Level.InitialIncome;
+            return _level.InitialIncome;
         }
 
         public void TriggerGameEnd(GameEndReason gameEndReason)
@@ -157,7 +162,7 @@ namespace Gameplay
                 {typeof(LoseState), new LoseState(this)}
             };
 
-            _stateStateMachine.SetStates(states);
+            _stateStateMachine.SetStates(states, typeof(AwaitingState));
         }
 
         private Wave? GetWave(int waveNumber)
@@ -166,7 +171,7 @@ namespace Gameplay
 
             if (waveNumber < TotalWavesCount)
             {
-                wave = Level.Waves[waveNumber];
+                wave = _level.Waves[waveNumber];
             }
 
             return wave;
@@ -184,8 +189,14 @@ namespace Gameplay
             _activeEnemies
                 .RemoveAll(e => e.IsDead() || !e.gameObject.activeSelf);
         }
+        
+        private void OnPlayerBaseDestroyed()
+        {
+            ShouldTriggerGameLose = true;
+        }
 
         #endregion
+
 
     }
 }
