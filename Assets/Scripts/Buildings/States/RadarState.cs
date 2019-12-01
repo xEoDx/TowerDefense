@@ -8,7 +8,7 @@ namespace Buildings.States
 {
     public class RadarState : FSMState
     {
-        private Tower _tower;
+        private readonly Tower _tower;
         
         public RadarState(Tower tower) : base(tower.gameObject)
         {

@@ -4,7 +4,7 @@ namespace Buildings.States
 {
     public class PlacingState : FSMState
     {
-        private Tower _tower;
+        private readonly Tower _tower;
 
         public PlacingState(Tower tower) : base(tower.gameObject)
         {

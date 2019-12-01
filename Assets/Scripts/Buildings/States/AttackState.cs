@@ -9,8 +9,8 @@ namespace Buildings.States
     {
         private const float MaxStuckTime = 1.5f;
 
-        private Tower _tower;
-        private AmmoPool _ammoPool;
+        private readonly Tower _tower;
+        private readonly AmmoPool _ammoPool;
         private Enemy _currentTarget;
         private Transform _enemyTransform;
         private float _attackElapsedTime;
