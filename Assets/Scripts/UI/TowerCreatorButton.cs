@@ -1,4 +1,5 @@
 ﻿using Buildings;
+using Gameplay;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,12 +16,14 @@ namespace UI
         private Button _button;
         private TowerPlacer _towerPlacer;
         private PlayerController _playerController;
+        private PlayerData _playerData;
     
         private void Awake()
         {
             _button = GetComponent<Button>();
             _towerPlacer = FindObjectOfType<TowerPlacer>();
             _playerController = FindObjectOfType<PlayerController>();
+            _playerData = FindObjectOfType<PlayerData>();
         }
 
         private void Start()

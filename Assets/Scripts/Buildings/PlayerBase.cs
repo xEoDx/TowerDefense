@@ -1,6 +1,7 @@
 ﻿using System;
 using Constants;
 using Entities;
+using Gameplay;
 using UnityEngine;
 
 namespace Buildings
@@ -10,20 +11,28 @@ namespace Buildings
     {
         public event Action OnBaseDestroyed;
         
-        [SerializeField] private int maxEnemiesArriveNumer = 5;
+        private int _maxEnemiesArriveNumer;
 
         private int _currentEnemiesArrivedCount;
         private bool _isBaseDestroyedTriggered;
 
+        private PlayerData _playerData;
+        
+        private void Awake()
+        {
+            _playerData = FindObjectOfType<PlayerData>();
+        }
+
         private void Start()
         {
+            _maxEnemiesArriveNumer = _playerData.PlayerBaseHealth;
             _currentEnemiesArrivedCount = 0;
             _isBaseDestroyedTriggered = false;
         }
 
         private void Update()
         {
-            if (!_isBaseDestroyedTriggered && _currentEnemiesArrivedCount >= maxEnemiesArriveNumer)
+            if (!_isBaseDestroyedTriggered && _currentEnemiesArrivedCount >= _maxEnemiesArriveNumer)
             {
                 _isBaseDestroyedTriggered = true;   
                 OnBaseDestroyed?.Invoke();

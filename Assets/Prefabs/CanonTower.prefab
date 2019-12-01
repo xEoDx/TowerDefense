@@ -71,22 +71,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 3261536659904043438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b896ce3cfab18b24785a9753036319cf, type: 3}
+  m_Script: {fileID: 11500000, guid: 23b4d7cb66e993b44be309dafdfbd1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotatingElementTransform: {fileID: 3824396005642313766}
   forceToPlacedState: 0
   entityAttributes:
     offensiveAttributes:
-      range: 35
+      range: 30
       damage: 15
-      attackSpeed: 0.4
-      projectileSpeed: 100
+      attackSpeed: 0.5
+      projectileSpeed: 60
     defensiveAttributes:
       health: 100
     movementAttributes:
       movementSpeed: 0
-      rotationSpeed: 1
+      rotationSpeed: 2
 --- !u!208 &3261536659904043432
 NavMeshObstacle:
   m_ObjectHideFlags: 0

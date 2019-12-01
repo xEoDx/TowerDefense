@@ -44,7 +44,6 @@ namespace Gameplay.States
 
         public override void Exit()
         {
-            Debug.Log("[StartingState] OnExit");
             _elapsedTime = 0;
         }
     }

@@ -10,7 +10,6 @@ namespace AI.States
     {
         private static readonly float StuckTimeThreshold = 5.0f;
         private static readonly int Run = Animator.StringToHash("run");
-        private static readonly int WalkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
 
         private readonly Enemy _enemy;
         private readonly Animator _animator;
@@ -39,7 +38,6 @@ namespace AI.States
             {
                 _currentDestinationPosition = hit.position;
             }
-            Debug.Log("[RunState] Running to target at position " + _currentDestinationPosition);
 
             _agent.SetDestination(_currentDestinationPosition);
         }

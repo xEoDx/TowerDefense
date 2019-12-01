@@ -11,7 +11,7 @@ namespace Buildings
 {
     [RequireComponent(typeof(StateMachine))]
     [RequireComponent(typeof(AmmoPool))]
-    public abstract class Tower : MonoBehaviour
+    public class Tower : MonoBehaviour
     {
         #region Serializable Fields
 
@@ -20,26 +20,22 @@ namespace Buildings
 
         [SerializeField] private bool forceToPlacedState = false;
 
-        [SerializeField] private EntityAttributes entityAttributes;
-
         #endregion
 
         #region Properties
-
-        public EntityAttributes EntityAttributes => entityAttributes;
-
+        public EntityAttributes EntityAttributes { get; private set; }
         public AmmoPool AmmoPool { get; private set; }
         public bool IsPlaced { get; private set; }
 
         #endregion
 
         #region Fields
-
-        protected float CurrentHealth;
-
-        private StateMachine _stateMachine;
-        private Enemy _currentTarget;
+        
         private GameplayController _gameplayController;
+        private StateMachine _stateMachine;
+        private PlayerData _playerData;
+        private Enemy _currentTarget;
+        private float _currentHealth;
 
         private int _enemyMask;
         private int _obstacleMask;
@@ -48,19 +44,21 @@ namespace Buildings
 
         #region Unity Event Functions
 
-        void Awake()
+        private void Awake()
         {
             AmmoPool = GetComponent<AmmoPool>();
             _gameplayController = FindObjectOfType<GameplayController>();
-
-            _currentTarget = null;
-            CurrentHealth = EntityAttributes.DefensiveAttributesData.Health;
+            _playerData = FindObjectOfType<PlayerData>();
         }
 
         private void Start()
         {
+            _currentTarget = null;
             _enemyMask = LayerMask.GetMask("Enemy");
             _obstacleMask = LayerMask.GetMask("Obstacle");
+
+            EntityAttributes = _playerData.CanonEntityAttributes;
+            _currentHealth = EntityAttributes.DefensiveAttributesData.Health;
 
             AmmoPool.InitAmmoPool(EntityAttributes.OffensiveAttributesData.Damage,
                 EntityAttributes.OffensiveAttributesData.ProjectileSpeed);
@@ -96,7 +94,12 @@ namespace Buildings
 
         #region Abstract Interface
 
-        public abstract void ReceiveDamage(float amount);
+        public void ReceiveDamage(float amount)
+    {
+            var updatedHealth = Mathf.Max(0, _currentHealth - amount);
+            UpdateHealth(updatedHealth);
+            
+        }
 
         #endregion
 
@@ -156,12 +159,12 @@ namespace Buildings
 
         private bool IsDestroyed()
         {
-            return CurrentHealth <= 0;
+            return _currentHealth <= 0;
         }
 
         public void UpdateHealth(float newHealth)
         {
-            CurrentHealth = newHealth;
+            _currentHealth = newHealth;
         }
 
         public IList<Enemy> GetActiveEnemies()

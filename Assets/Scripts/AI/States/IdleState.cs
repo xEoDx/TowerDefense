@@ -40,7 +40,6 @@ namespace AI.States
 
         public override void Exit()
         {
-            Debug.Log("[IdleState] Exit");
         }
     }
 }
