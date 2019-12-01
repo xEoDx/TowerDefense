@@ -25,7 +25,9 @@ namespace Buildings
         #region Properties
         public EntityAttributes EntityAttributes { get; private set; }
         public AmmoPool AmmoPool { get; private set; }
+        public TowerType TowerType { get; private set; }
         public bool IsPlaced { get; private set; }
+        public int BuildCost { get; private set; }
         public Transform GetTransform => transform;
 
         #endregion
@@ -47,6 +49,7 @@ namespace Buildings
 
         private void Awake()
         {
+            TowerType = TowerType.Canon;
             AmmoPool = GetComponent<AmmoPool>();
             _gameplayController = FindObjectOfType<GameplayController>();
             _playerData = FindObjectOfType<PlayerData>();
@@ -58,6 +61,7 @@ namespace Buildings
             _enemyMask = LayerMask.GetMask("Enemy");
             _obstacleMask = LayerMask.GetMask("Obstacle");
 
+            BuildCost = _playerData.CanonBuildCost;
             EntityAttributes = _playerData.CanonEntityAttributes;
             _currentHealth = EntityAttributes.DefensiveAttributesData.Health;
 
@@ -87,7 +91,7 @@ namespace Buildings
         {
             if (!HasHealth())
             {
-                DestroyTower();
+                DestroyEntity();
             }
         }
 
@@ -106,7 +110,7 @@ namespace Buildings
             AmmoPool.Shoot(targetPosition);
         }
 
-        public void DestroyTower()
+        public void DestroyEntity()
         {
             // TODO Play particles, etc...
             gameObject.SetActive(false);

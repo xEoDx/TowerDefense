@@ -12,8 +12,40 @@ namespace Gameplay
         public int PlayerBaseHealth => playerBaseHealth;
 
         // TODO this should be done from a TowerManager which controls the stats (based on tower level for instance)
-        [Header("Canon Tower")] 
-        [SerializeField] private EntityAttributes cannonEntityAttributes;
-        public EntityAttributes CanonEntityAttributes => cannonEntityAttributes;
+        [Header("Canon Tower")] [SerializeField]
+        private EntityAttributes canonEntityAttributes;
+
+        public EntityAttributes CanonEntityAttributes => canonEntityAttributes;
+
+        [SerializeField] private int canonBuildCost;
+        public int CanonBuildCost => canonBuildCost;
+
+
+        public int GetTowerCost(TowerType type)
+        {
+            int cost = 0;
+            switch (type)
+            {
+                case TowerType.Canon:
+                    cost = canonBuildCost;
+                    break;
+            }
+
+            return cost;
+        }
+
+        public EntityAttributes GetTowerAttributes(TowerType type)
+        {
+            EntityAttributes attributes = new EntityAttributes();
+
+            switch (type)
+            {
+                case TowerType.Canon:
+                    attributes = canonEntityAttributes;
+                    break;
+            }
+
+            return attributes;
+        }
     }
 }
