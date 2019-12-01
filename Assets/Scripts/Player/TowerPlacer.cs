@@ -10,7 +10,7 @@ namespace Player
 {
     public class TowerPlacer : MonoBehaviour
     {
-        private Tower _tower;
+        private CanonTower _canonTower;
         private Camera _camera;
         private float _towerBoundValue;
 
@@ -41,41 +41,41 @@ namespace Player
 
                     if (isValidPosition)
                     {
-                        _tower.SetPlaceable();
+                        _canonTower.SetPlaceable();
 
                         var updatedPosition = centerNavMeshHit.position;
                         updatedPosition.y = 0;
-                        _tower.transform.position = updatedPosition;
+                        _canonTower.transform.position = updatedPosition;
                     }
                     else
                     {
-                        _tower.SetUnplaceable();
-                        _tower.transform.position = hit.point;
+                        _canonTower.SetUnplaceable();
+                        _canonTower.transform.position = hit.point;
                     }
                 }
 
                 if (isValidPosition && _inputController.IsTouching() && !EventSystem.current.IsPointerOverGameObject())
                 {
-                    _tower.PlaceTower();
+                    _canonTower.PlaceTower();
                     IsPlacing = false;
                     SetTowerEnabled(true);
                 }
             }
         }
 
-        public void Create(Tower tower)
+        public void Create(CanonTower canonTower)
         {
-            _tower = tower;
-            _towerBoundValue = _tower.transform.GetComponent<NavMeshObstacle>().radius;
+            _canonTower = canonTower;
+            _towerBoundValue = _canonTower.transform.GetComponent<NavMeshObstacle>().radius;
             SetTowerEnabled(false);
             IsPlacing = true;
         }
 
         private void SetTowerEnabled(bool isEnabled)
         {
-            _tower.enabled = isEnabled;
-            _tower.GetComponent<NavMeshObstacle>().enabled = isEnabled;
-            _tower.GetComponent<StateMachine>().enabled = isEnabled;
+            _canonTower.enabled = isEnabled;
+            _canonTower.GetComponent<NavMeshObstacle>().enabled = isEnabled;
+            _canonTower.GetComponent<StateMachine>().enabled = isEnabled;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace AI.States
         private readonly AmmoPool _ammoPool;
         private readonly Transform _transform;
         private readonly Animator _animator;
-        private Tower _currentTarget;
+        private ITower _currentTarget;
 
         private float _lastAttackTime;
 
@@ -47,7 +47,7 @@ namespace AI.States
             {
                 if (_lastAttackTime >= _enemy.EntityAttributesData.OffensiveAttributesData.AttackSpeed)
                 {
-                    _ammoPool.Shoot(_currentTarget.transform.position);
+                    _ammoPool.Shoot(_currentTarget.GetTransform.position);
                     _lastAttackTime = 0;
                 }
 
@@ -57,13 +57,12 @@ namespace AI.States
             }
 
             return typeof(RunState);
-
         }
 
         public override void Exit()
         {}
         
-        Tower GetClosestTower()
+        ITower GetClosestTower()
         {
             int layerMask = Layers.Tower;
             Debug.DrawRay(_transform.position, _transform.forward * Enemy.RayDistance, Color.red);
@@ -71,7 +70,7 @@ namespace AI.States
             RaycastHit hit;        
             if (Physics.Raycast(_transform.position, _transform.forward, out hit, Enemy.RayDistance, layerMask))
             {
-                var tower = hit.transform.GetComponent<Tower>();
+                var tower = hit.transform.GetComponent<ITower>();
 
                 return tower;
             }

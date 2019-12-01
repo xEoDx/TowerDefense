@@ -41,7 +41,7 @@ namespace UI
             if (!_towerPlacer.IsPlacing)
             {
                 var towerObject = Instantiate(towerPrefab);
-                _towerPlacer.Create(towerObject.GetComponent<Tower>());
+                _towerPlacer.Create(towerObject.GetComponent<CanonTower>());
                 _playerController.SubtractIncome(cost);
             }
         }

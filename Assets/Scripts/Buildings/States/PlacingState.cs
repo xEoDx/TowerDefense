@@ -5,11 +5,11 @@ namespace Buildings.States
 {
     public class PlacingState : FsmState
     {
-        private readonly Tower _tower;
+        private readonly CanonTower _canonTower;
 
-        public PlacingState(Tower tower) : base(tower)
+        public PlacingState(CanonTower canonTower) : base(canonTower)
         {
-            _tower = tower;
+            _canonTower = canonTower;
         }
 
         public override void Init()
@@ -18,7 +18,7 @@ namespace Buildings.States
 
         public override Type Execute()
         {
-            if (_tower.IsPlaced)
+            if (_canonTower.IsPlaced)
             {
                 return typeof(RadarState);
             }

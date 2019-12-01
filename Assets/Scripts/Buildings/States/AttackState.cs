@@ -10,32 +10,32 @@ namespace Buildings.States
     {
         private const float MaxStuckTime = 1.5f;
 
-        private readonly Tower _tower;
+        private readonly CanonTower _canonTower;
         private readonly AmmoPool _ammoPool;
         private Enemy _currentTarget;
         private Transform _enemyTransform;
         private float _attackElapsedTime;
         private float _elapsedStuckTime;
 
-        public AttackState(Tower tower) : base(tower)
+        public AttackState(CanonTower canonTower) : base(canonTower)
         {
-            _tower = tower;
-            _ammoPool = _tower.AmmoPool;
+            _canonTower = canonTower;
+            _ammoPool = _canonTower.AmmoPool;
         }
 
         public override void Init()
         {
             _elapsedStuckTime = 0;
             _attackElapsedTime = 0;
-            _currentTarget = _tower.GetCurrentTarget();
-            _enemyTransform = _tower.GetCurrentTarget().transform;
+            _currentTarget = _canonTower.GetCurrentTarget();
+            _enemyTransform = _canonTower.GetCurrentTarget().transform;
         }
 
         public override Type Execute()
         {
             if (_currentTarget.IsDead() ||
-                Vector3.Distance(_enemyTransform.position, _tower.transform.position) >
-                _tower.EntityAttributes.OffensiveAttributesData.Range)
+                Vector3.Distance(_enemyTransform.position, _canonTower.transform.position) >
+                _canonTower.TowerEntityAttributes.OffensiveAttributesData.Range)
             {
                 return typeof(RadarState);
             }
@@ -44,13 +44,13 @@ namespace Buildings.States
 
             if (IsFacingEnemy(_enemyTransform.position))
             {
-                if (!_tower.IsBlockedByObstacle(_enemyTransform.position))
+                if (!_canonTower.IsBlockedByObstacle(_enemyTransform.position))
                 {
                     _elapsedStuckTime = 0;
-                    if (_attackElapsedTime > _tower.EntityAttributes.OffensiveAttributesData.AttackSpeed)
+                    if (_attackElapsedTime > _canonTower.TowerEntityAttributes.OffensiveAttributesData.AttackSpeed)
                     {
                         _attackElapsedTime = 0;
-                        _ammoPool.Shoot(_enemyTransform.position);
+                        _canonTower.Attack(_enemyTransform.position);
                     }
 
                     _attackElapsedTime += Time.deltaTime;
@@ -71,8 +71,8 @@ namespace Buildings.States
 
         private bool IsFacingEnemy(Vector3 enemyPosition)
         {
-            var heading = (enemyPosition - _tower.RotatingElementTransform.position).normalized;
-            var dotProduct = Vector3.Dot(heading, _tower.RotatingElementTransform.forward);
+            var heading = (enemyPosition - _canonTower.RotatingElementTransform.position).normalized;
+            var dotProduct = Vector3.Dot(heading, _canonTower.RotatingElementTransform.forward);
 
             return dotProduct > 0.85f;
         }
@@ -84,13 +84,13 @@ namespace Buildings.States
 
         private void UpdateRotation()
         {
-            var direction = _enemyTransform.position - _tower.transform.position;
-            float step = _tower.EntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
+            var direction = _enemyTransform.position - _canonTower.transform.position;
+            float step = _canonTower.TowerEntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
 
             Vector3 newDirection =
-                Vector3.RotateTowards(_tower.RotatingElementTransform.forward, direction, step, 0.0f);
+                Vector3.RotateTowards(_canonTower.RotatingElementTransform.forward, direction, step, 0.0f);
 
-            _tower.RotatingElementTransform.rotation = Quaternion.LookRotation(newDirection);
+            _canonTower.RotatingElementTransform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
 }

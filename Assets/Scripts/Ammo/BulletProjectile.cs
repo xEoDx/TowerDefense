@@ -42,7 +42,7 @@ namespace Ammo
         {
             if (other.CompareTag(Tags.Tower) && transform.CompareTag(Tags.EnemyAmmo))
             {
-                var tower = other.GetComponent<Tower>();
+                var tower = other.GetComponent<ITower>();
                 tower.ReceiveDamage(damage);
                 ResetProjectile();
             }

@@ -11,21 +11,22 @@ namespace Buildings
 {
     [RequireComponent(typeof(StateMachine))]
     [RequireComponent(typeof(AmmoPool))]
-    public class Tower : MonoBehaviour
+    public class CanonTower : MonoBehaviour, ITower
     {
         #region Serializable Fields
 
         [SerializeField] private Transform rotatingElementTransform;
         public Transform RotatingElementTransform => rotatingElementTransform;
 
-        [SerializeField] private bool forceToPlacedState = false;
+        [SerializeField] private bool forceToPlacedState;
 
         #endregion
 
         #region Properties
-        public EntityAttributes EntityAttributes { get; private set; }
+        public EntityAttributes TowerEntityAttributes { get; private set; }
         public AmmoPool AmmoPool { get; private set; }
         public bool IsPlaced { get; private set; }
+        public Transform GetTransform => transform;
 
         #endregion
 
@@ -57,11 +58,11 @@ namespace Buildings
             _enemyMask = LayerMask.GetMask("Enemy");
             _obstacleMask = LayerMask.GetMask("Obstacle");
 
-            EntityAttributes = _playerData.CanonEntityAttributes;
-            _currentHealth = EntityAttributes.DefensiveAttributesData.Health;
+            TowerEntityAttributes = _playerData.CanonEntityAttributes;
+            _currentHealth = TowerEntityAttributes.DefensiveAttributesData.Health;
 
-            AmmoPool.InitAmmoPool(EntityAttributes.OffensiveAttributesData.Damage,
-                EntityAttributes.OffensiveAttributesData.ProjectileSpeed);
+            AmmoPool.InitAmmoPool(TowerEntityAttributes.OffensiveAttributesData.Damage,
+                TowerEntityAttributes.OffensiveAttributesData.ProjectileSpeed);
 
             _stateMachine = GetComponent<StateMachine>();
             var towerFsmStates = new Dictionary<Type, FsmState>
@@ -84,28 +85,40 @@ namespace Buildings
 
         private void Update()
         {
-            if (IsDestroyed())
+            if (!HasHealth())
             {
-                gameObject.SetActive(false);
+                DestroyTower();
             }
         }
 
         #endregion
 
-        #region Abstract Interface
+        #region Interface Methods
 
         public void ReceiveDamage(float amount)
-    {
+        {
             var updatedHealth = Mathf.Max(0, _currentHealth - amount);
             UpdateHealth(updatedHealth);
-            
+        }
+
+        public void Attack(Vector3 targetPosition)
+        {
+            AmmoPool.Shoot(targetPosition);
+        }
+
+        public void DestroyTower()
+        {
+            // TODO Play particles, etc...
+            gameObject.SetActive(false);
         }
 
         #endregion
 
         #region Methods
 
-        //TODO MOVE TO TOWERRENDERER
+        //TODO Move Render logic to a ITowerRenderer interface
+
+
         public void SetUnplaceable()
         {
             var renderers = transform.GetComponentsInChildren<MeshRenderer>();
@@ -157,28 +170,13 @@ namespace Buildings
             IsPlaced = true;
         }
 
-        private bool IsDestroyed()
-        {
-            return _currentHealth <= 0;
-        }
-
-        public void UpdateHealth(float newHealth)
-        {
-            _currentHealth = newHealth;
-        }
-
-        public IList<Enemy> GetActiveEnemies()
-        {
-            return _gameplayController.GetActiveEnemies();
-        }
-
         public bool IsBlockedByObstacle(Vector3 enemyPosition)
         {
             var towerPosition = rotatingElementTransform.position;
             var direction = enemyPosition - towerPosition;
             var hits = Physics.RaycastAll(towerPosition,
                 direction,
-                EntityAttributes.OffensiveAttributesData.Range,
+                TowerEntityAttributes.OffensiveAttributesData.Range,
                 _enemyMask | _obstacleMask);
 
             var enemyDistance = float.MaxValue;
@@ -203,6 +201,21 @@ namespace Buildings
             }
 
             return obstacleDistance < enemyDistance;
+        }
+
+        private bool HasHealth()
+        {
+            return _currentHealth > 0;
+        }
+
+        public IList<Enemy> GetActiveEnemies()
+        {
+            return _gameplayController.GetActiveEnemies();
+        }
+
+        private void UpdateHealth(float newHealth)
+        {
+            _currentHealth = newHealth;
         }
 
         #endregion

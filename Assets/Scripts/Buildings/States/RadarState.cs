@@ -9,11 +9,11 @@ namespace Buildings.States
 {
     public class RadarState : FsmState
     {
-        private readonly Tower _tower;
+        private readonly CanonTower _canonTower;
         
-        public RadarState(Tower tower) : base(tower)
+        public RadarState(CanonTower canonTower) : base(canonTower)
         {
-            _tower = tower;
+            _canonTower = canonTower;
         }
 
         public override void Init()
@@ -25,12 +25,12 @@ namespace Buildings.States
 
             Enemy closestEnemy = null;
             float closestEnemyDistance = float.MaxValue;
-            foreach (var enemy in _tower.GetActiveEnemies())
+            foreach (var enemy in _canonTower.GetActiveEnemies())
             {
-                var distance = Vector3.Distance(enemy.transform.position, _tower.transform.position);
-                if (distance < _tower.EntityAttributes.OffensiveAttributesData.Range)
+                var distance = Vector3.Distance(enemy.transform.position, _canonTower.transform.position);
+                if (distance < _canonTower.TowerEntityAttributes.OffensiveAttributesData.Range)
                 {
-                    if (!_tower.IsBlockedByObstacle(enemy.transform.position) && distance < closestEnemyDistance)
+                    if (!_canonTower.IsBlockedByObstacle(enemy.transform.position) && distance < closestEnemyDistance)
                     {
                         closestEnemyDistance = distance;
                         closestEnemy = enemy;
@@ -40,7 +40,7 @@ namespace Buildings.States
 
             if (closestEnemy != null)
             {
-                _tower.SetTarget(closestEnemy);
+                _canonTower.SetTarget(closestEnemy);
                 return typeof(AttackState);
             }
 
@@ -52,8 +52,8 @@ namespace Buildings.States
         
         private void UpdateRotation()
         {
-            float step = _tower.EntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
-            _tower.RotatingElementTransform.rotation = Quaternion.Lerp(_tower.RotatingElementTransform.rotation, Quaternion.identity, step);
+            float step = _canonTower.TowerEntityAttributes.MovementAttributesData.RotationSpeed * Time.deltaTime;
+            _canonTower.RotatingElementTransform.rotation = Quaternion.Lerp(_canonTower.RotatingElementTransform.rotation, Quaternion.identity, step);
         }
     }
 }
