@@ -1,19 +1,17 @@
-using AI;
-using Ammo;
-using Constants;
-using UnityEngine;
+using Entities;
 
 namespace Buildings
 {
+    public enum TowerType
+    {
+        Canon
+      
+    }
+
     public interface ITower : IEntity
     {
-        AmmoPool AmmoPool { get; }
+        TowerType TowerType { get; }
         bool IsPlaced { get; }
-        Transform GetTransform { get; }
-
-        void Attack(Vector3 targetPosition);
-        void ReceiveDamage(float amount);
-        void DestroyTower();
-
+        int BuildCost { get; }
     }
 }

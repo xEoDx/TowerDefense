@@ -19,6 +19,8 @@ namespace AI
 
         [SerializeField] private EntityAttributes enemyAttributes;
         public EntityAttributes EntityAttributes { get; }
+        public AmmoPool AmmoPool { get; }
+        public Transform GetTransform { get; }
 
         [Header("Other")] 
         [SerializeField] 
@@ -51,10 +53,20 @@ namespace AI
             _stateMachine.SetStates(states);
         }
 
+        public void Attack(Vector3 targetPosition)
+        {
+            _ammoPool.Shoot(targetPosition);
+        }
+
         public void ReceiveDamage(float amount)
         {
             var newHealthvalue = Mathf.Max(0, _currentHealth - amount);
             _currentHealth = newHealthvalue;
+        }
+
+        public void DestroyEntity()
+        {
+            gameObject.SetActive(false);
         }
 
         public bool IsDead()

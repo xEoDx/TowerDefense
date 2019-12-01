@@ -1,5 +1,6 @@
 
 using Constants;
+using Entities;
 
 namespace AI
 {
@@ -7,6 +8,6 @@ namespace AI
     {
         int Reward { get; }
 
-        void ReceiveDamage(float amount);
+        
     }
 }
