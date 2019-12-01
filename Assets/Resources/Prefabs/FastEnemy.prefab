@@ -88,8 +88,8 @@ MonoBehaviour:
   owner: 1
   projectilePrefab: {fileID: 6023781092522176050, guid: 438216cd4f064484ea1a867bb2a5d4c5,
     type: 3}
-  projectileParentTransform: {fileID: 0}
-  poolSize: 10
+  projectileParentTransform: {fileID: 7867548885207994318}
+  poolSize: 2
 --- !u!195 &5822838334466614328
 NavMeshAgent:
   m_ObjectHideFlags: 0
