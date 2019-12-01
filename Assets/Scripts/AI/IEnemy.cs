@@ -14,9 +14,12 @@ namespace AI
     
     public interface IEnemy : IEntity
     {
-        int Reward { get; }
         EnemyType EnemyType { get; }
+        int Reward { get; }
 
-        
+
+        void InitEnemy();
+
+
     }
 }

@@ -27,21 +27,25 @@ namespace AI
         private int reward = 50;
 
         public int Reward => reward;
-        public EnemyType EnemyType { get; private set; }
+
+        public EnemyType EnemyType { get; protected set; }
 
         private float _currentHealth;
+
         private AmmoPool _ammoPool;
+
         private StateMachine _stateMachine;
+
         private LevelData _levelData;
 
         private void Awake()
         {
             _levelData = FindObjectOfType<LevelData>();
+            InitEnemy();
         }
 
         private void Start()
         {
-            EnemyType = EnemyType.Basic;
             _stateMachine = GetComponent<StateMachine>();
             _ammoPool = GetComponent<AmmoPool>();
             EntityAttributes = _levelData.GetEnemyAttributes(EnemyType);
@@ -58,6 +62,11 @@ namespace AI
             };
 
             _stateMachine.SetStates(states);
+        }
+
+        public virtual void InitEnemy()
+        {
+            EnemyType = EnemyType.Basic;
         }
 
         public void Attack(Vector3 targetPosition)

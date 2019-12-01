@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5822838334466614333}
   - component: {fileID: 5822838334466614331}
-  - component: {fileID: 5822838334466614332}
+  - component: {fileID: 6512917800655223078}
   - component: {fileID: 5822838334466614330}
   - component: {fileID: 5822838334466614328}
   - component: {fileID: 5822838334466614329}
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202f0cd76f305724eb9128e8804674c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5822838334466614332
+--- !u!114 &6512917800655223078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,21 +58,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5822838334466614334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae33b7d9c05f0fd489122f72e002d167, type: 3}
+  m_Script: {fileID: 11500000, guid: 500eea7b5bc3b1541bbcb20fd3fd5f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityAttributes:
-    offensiveAttributes:
-      range: 5
-      damage: 50
-      attackSpeed: 1
-      projectileSpeed: 100
-    defensiveAttributes:
-      health: 30
-    movementAttributes:
-      movementSpeed: 7
-      rotationSpeed: 15
-  reward: 40
+  reward: 25
 --- !u!114 &5822838334466614330
 MonoBehaviour:
   m_ObjectHideFlags: 0
