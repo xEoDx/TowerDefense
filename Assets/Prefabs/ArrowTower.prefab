@@ -259,17 +259,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotatingElementTransform: {fileID: 3261536659766888542}
   forceToPlacedState: 0
-  towerAttributes:
+  entityAttributes:
     offensiveAttributes:
       range: 35
       damage: 15
-      attackSpeed: 0.25
-      projectileSpeed: 90
+      attackSpeed: 0.4
+      projectileSpeed: 100
     defensiveAttributes:
       health: 100
     movementAttributes:
       movementSpeed: 0
-      rotationSpeed: 2
+      rotationSpeed: 1
 --- !u!208 &3261536659904043432
 NavMeshObstacle:
   m_ObjectHideFlags: 0

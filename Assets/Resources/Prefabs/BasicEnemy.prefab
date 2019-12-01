@@ -158,11 +158,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae33b7d9c05f0fd489122f72e002d167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  projectileSpeed: 250
-  health: 100
+  entityAttributes:
+    offensiveAttributes:
+      range: 5
+      damage: 50
+      attackSpeed: 1
+      projectileSpeed: 100
+    defensiveAttributes:
+      health: 100
+    movementAttributes:
+      movementSpeed: 3
+      rotationSpeed: 5
   reward: 50
-  _currentHealth: 0
 --- !u!114 &9222063158263459295
 MonoBehaviour:
   m_ObjectHideFlags: 0
