@@ -23,6 +23,10 @@ namespace UI
         {
             _isInitialized = false;
             _playerController = FindObjectOfType<PlayerController>();
+        }
+
+        private void Start()
+        {
             _playerController.OnIncomeUpdated += OnIncomeUpdatedListener;
         }
 

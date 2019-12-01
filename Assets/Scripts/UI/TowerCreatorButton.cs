@@ -23,9 +23,14 @@ namespace UI
             _playerController = FindObjectOfType<PlayerController>();
         }
 
-        private void Update()
+        private void Start()
         {
-            _button.interactable = _playerController.PlayerGameplayData.Income >= cost;
+            _playerController.OnIncomeUpdated += OnIncomeUpdatedListener;
+        }
+
+        private void OnIncomeUpdatedListener(int newIncomeAmount)
+        {
+            _button.interactable = newIncomeAmount >= cost;
         }
 
         public void Create()

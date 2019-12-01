@@ -6,26 +6,23 @@ namespace Player
     [Serializable]
     public struct PlayerGameplayData
     {
-        [SerializeField]
-        private int income;
-
-        public int Income => income;
+        public int Income { get; private set; }
 
         public PlayerGameplayData(int income)
         {
-            this.income = income;
+            Income = income;
         }
 
         public int AddIncome(int amount)
         {
-            income += amount;
-            return income;
+            Income += amount;
+            return Income;
         }
 
         public int SubtractIncome(int amount)
         {
-            income = Mathf.Max(0, income - amount);
-            return income;
+            Income = Mathf.Max(0, Income - amount);
+            return Income;
         }
     }
 }
