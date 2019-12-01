@@ -9,6 +9,7 @@ namespace Buildings
     [RequireComponent(typeof(BoxCollider))]
     public class PlayerBase : MonoBehaviour
     {
+        public event Action<int> OnPlayerLivesUpdated;
         public event Action OnBaseDestroyed;
         
         private int _maxEnemiesArriveNumer;
@@ -28,6 +29,7 @@ namespace Buildings
             _maxEnemiesArriveNumer = _playerData.PlayerBaseHealth;
             _currentEnemiesArrivedCount = 0;
             _isBaseDestroyedTriggered = false;
+            UpdatePlayerLives();
         }
 
         private void Update()
@@ -44,7 +46,14 @@ namespace Buildings
             if (!_isBaseDestroyedTriggered && other.transform.CompareTag(Tags.Enemy))
             {
                 _currentEnemiesArrivedCount++;
+                UpdatePlayerLives();
             }
+        }
+
+        private void UpdatePlayerLives()
+        {
+            var lives = _maxEnemiesArriveNumer - _currentEnemiesArrivedCount; 
+            OnPlayerLivesUpdated?.Invoke(lives);
         }
     }
 }
