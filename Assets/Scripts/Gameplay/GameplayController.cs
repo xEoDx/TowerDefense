@@ -45,22 +45,15 @@ namespace Gameplay
         
         private void Awake()
         {
-            InitLevelData();
-            InitFsm();
-            _playerBase = FindObjectOfType<PlayerBase>();
-        }
-
-        private void InitLevelData()
-        {
             _levelData = GetComponent<LevelData>();
-            TotalWavesCount = _levelData.Level.Waves.Count;
-            _activeEnemies = new List<Enemy>();
-            CurrentWaveNumber = 0;
-            _enemySpawner = FindObjectOfType<EnemySpawner>();
+            _playerBase = FindObjectOfType<PlayerBase>();
         }
 
         private void Start()
         {
+            InitFsm();
+            InitLevelData();
+
             _playerBase.OnBaseDestroyed += OnPlayerBaseDestroyed;
             
             // Allocate enemies on Start so that we don't need to create them during game play runtime
@@ -140,6 +133,14 @@ namespace Gameplay
             };
 
             _stateStateMachine.SetStates(states, typeof(AwaitingState));
+        }
+        
+        private void InitLevelData()
+        {
+            TotalWavesCount = _levelData.Level.Waves.Count;
+            _activeEnemies = new List<Enemy>();
+            CurrentWaveNumber = 0;
+            _enemySpawner = FindObjectOfType<EnemySpawner>();
         }
 
         private Wave? GetWave(int waveNumber)
