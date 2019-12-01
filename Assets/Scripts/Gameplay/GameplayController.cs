@@ -53,21 +53,32 @@ namespace Gameplay
             IList<Wave> waves = new List<Wave>();
             IDictionary<EnemySpawner.EnemyType, int> waveEnemies = new Dictionary<EnemySpawner.EnemyType, int>()
             {
-                {EnemySpawner.EnemyType.Basic, 2},
-                {EnemySpawner.EnemyType.Big, 2}
+                {EnemySpawner.EnemyType.Basic, 20},
+                {EnemySpawner.EnemyType.Big, 10}
             };
-            float timeToSpawn = 5;
+            float timeToSpawn = 30;
 
             Wave wave = new Wave(waveEnemies, timeToSpawn);
             waves.Add(wave);
 
             waveEnemies = new Dictionary<EnemySpawner.EnemyType, int>
             {
-                {EnemySpawner.EnemyType.Basic, 5},
-                {EnemySpawner.EnemyType.Fast, 2},
-                {EnemySpawner.EnemyType.Big, 2}
+                {EnemySpawner.EnemyType.Basic, 25},
+                {EnemySpawner.EnemyType.Fast, 10},
+                {EnemySpawner.EnemyType.Big, 15}
             };
-            timeToSpawn = 15;
+            timeToSpawn = 40;
+
+            wave = new Wave(waveEnemies, timeToSpawn);
+            waves.Add(wave);
+            
+            waveEnemies = new Dictionary<EnemySpawner.EnemyType, int>
+            {
+                {EnemySpawner.EnemyType.Basic, 40},
+                {EnemySpawner.EnemyType.Fast, 20},
+                {EnemySpawner.EnemyType.Big, 25}
+            };
+            timeToSpawn = 60;
 
             wave = new Wave(waveEnemies, timeToSpawn);
             waves.Add(wave);

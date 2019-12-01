@@ -22,9 +22,9 @@ namespace AI.States
 
         public AttackState(Enemy enemy) : base(enemy)
         {
-            _ammoPool = component.GetComponent<AmmoPool>();
-            _transform = component.transform;
-            _animator = _transform.GetComponent<Animator>();
+            _transform = enemy.transform;
+            _ammoPool = enemy.GetComponent<AmmoPool>();
+            _animator = _transform.GetChild(0).GetComponent<Animator>();
             _enemy = enemy;
             _lastAttackTime = 0;
         }
